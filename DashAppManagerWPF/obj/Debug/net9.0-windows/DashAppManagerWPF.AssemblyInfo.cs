@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DashAppManagerWPF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55731c308bfddfce710a02dbfd809becf940a5d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fcc6815e9ca6ad5786de0878819bbede3c6f0b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("DashAppManagerWPF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DashAppManagerWPF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
