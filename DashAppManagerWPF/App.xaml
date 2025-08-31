@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:DashAppManagerWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="InterBlack">pack://application:,,,/assets/fonts/Inter_24pt-Black.ttf#Inter Black</FontFamily>
+        <FontFamily x:Key="InterThinItalic">pack://application:,,,/assets/fonts/Inter_24pt-ThinItalic.ttf#Inter Thin Italic</FontFamily>
+        <FontFamily x:Key="InterExtraBoldItalic">pack://application:,,,/assets/fonts/Inter_24pt-ExtraBoldItalic.ttf#Inter ExtraBold Italic</FontFamily>
     </Application.Resources>
 </Application>

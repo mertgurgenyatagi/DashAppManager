@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager-1\\DashAppManagerWPF\\DashAppManagerWPF.csproj": {}
+    "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager\\DashAppManagerWPF\\DashAppManagerWPF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager-1\\DashAppManagerWPF\\DashAppManagerWPF.csproj": {
+    "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager\\DashAppManagerWPF\\DashAppManagerWPF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager-1\\DashAppManagerWPF\\DashAppManagerWPF.csproj",
+        "projectUniqueName": "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager\\DashAppManagerWPF\\DashAppManagerWPF.csproj",
         "projectName": "DashAppManagerWPF",
-        "projectPath": "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager-1\\DashAppManagerWPF\\DashAppManagerWPF.csproj",
+        "projectPath": "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager\\DashAppManagerWPF\\DashAppManagerWPF.csproj",
         "packagesPath": "C:\\Users\\Mert\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager-1\\DashAppManagerWPF\\obj\\",
+        "outputPath": "C:\\Users\\Mert\\Desktop\\repos\\DashAppManager\\DashAppManagerWPF\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mert\\AppData\\Roaming\\NuGet\\NuGet.Config"

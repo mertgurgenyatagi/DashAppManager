@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+    <ItemGroup>
+      <Resource Include="assets/fonts/Inter_24pt-Black.ttf" />
+      <Resource Include="assets/fonts/Inter_24pt-ThinItalic.ttf" />
+      <Resource Include="assets/fonts/Inter_24pt-ExtraBoldItalic.ttf" />
+    </ItemGroup>
+
 </Project>
