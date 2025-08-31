@@ -11,9 +11,6 @@
 
 
     <ItemGroup>
-      <Resource Include="assets/fonts/Inter_24pt-Black.ttf" />
-      <Resource Include="assets/fonts/Inter_24pt-ThinItalic.ttf" />
-      <Resource Include="assets/fonts/Inter_24pt-ExtraBoldItalic.ttf" />
       <Resource Include="assets/images/dashapp_logo.png" />
   <Resource Include="assets/icons/dashboard.png" />
   <Resource Include="assets/icons/user.png" />
