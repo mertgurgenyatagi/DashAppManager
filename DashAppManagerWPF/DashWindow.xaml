@@ -1,0 +1,8 @@
+
+<Window x:Class="DashAppManagerWPF.DashWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="DashWindow" Height="300" Width="400">
+	<Grid>
+	</Grid>
+</Window>

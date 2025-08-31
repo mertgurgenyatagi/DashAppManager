@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DashAppManagerWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-            <!-- Sample font TextBlocks removed after testing -->
-    </Grid>
+        Title="MainWindow" Height="752" Width="1057" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
+                                <Canvas>
+                                        <!-- All rectangles: round all corners, offset 20px from window edge -->
+                                        <Border Canvas.Left="0" Canvas.Top="0" Width="83" Height="712" CornerRadius="20" Background="#2e2e47" />
+                                        <Border Canvas.Left="83" Canvas.Top="0" Width="577" Height="712" CornerRadius="20" Background="#2a2b42" />
+                                        <Border Canvas.Left="660" Canvas.Top="0" Width="397" Height="712" CornerRadius="20" Background="#2e2e47" />
+                                        <!-- Logo padded 20px from top and left -->
+                                        <Image Source="pack://application:,,,/assets/images/dashapp_logo.png" Width="40" Height="40" Canvas.Left="20" Canvas.Top="20" />
+                                </Canvas>
 </Window>

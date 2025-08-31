@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,10 +9,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+
     <ItemGroup>
       <Resource Include="assets/fonts/Inter_24pt-Black.ttf" />
       <Resource Include="assets/fonts/Inter_24pt-ThinItalic.ttf" />
       <Resource Include="assets/fonts/Inter_24pt-ExtraBoldItalic.ttf" />
+      <Resource Include="assets/images/dashapp_logo.png" />
     </ItemGroup>
 
 </Project>
