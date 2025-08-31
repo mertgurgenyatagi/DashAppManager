@@ -15,6 +15,20 @@
       <Resource Include="assets/fonts/Inter_24pt-ThinItalic.ttf" />
       <Resource Include="assets/fonts/Inter_24pt-ExtraBoldItalic.ttf" />
       <Resource Include="assets/images/dashapp_logo.png" />
+  <Resource Include="assets/icons/dashboard.png" />
+  <Resource Include="assets/icons/user.png" />
+  <Resource Include="assets/icons/notifications.png" />
+  <Resource Include="assets/icons/calendar.png" />
+  <Resource Include="assets/icons/config.png" />
+  <Resource Include="assets/icons/ai.png" />
+  <Resource Include="assets/icons/settings.png" />
+  <Resource Include="assets/icons/dashboard_blue.png" />
+  <Resource Include="assets/icons/user_blue.png" />
+  <Resource Include="assets/icons/notifications_blue.png" />
+  <Resource Include="assets/icons/calendar_blue.png" />
+  <Resource Include="assets/icons/config_blue.png" />
+  <Resource Include="assets/icons/ai_blue.png" />
+  <Resource Include="assets/icons/settings_blue.png" />
     </ItemGroup>
 
 </Project>
