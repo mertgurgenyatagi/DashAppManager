@@ -20,15 +20,26 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Loaded += MainWindow_Loaded;
+        MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
+    }
+
+    private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        // Only allow drag if mouse is within top 40px of window
+        var position = e.GetPosition(this);
+    if (position.Y <= 70)
+        {
+            DragMove();
+        }
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         // Dot grid parameters
-    double dotRadius = 1.0; // 2x2 px
+        double dotRadius = 1.0; // 2x2 px
         double spacing = 6;
         double gridWidth = 577;
-    double gridHeight = 190;
+        double gridHeight = 190;
         Color dotColor = (Color)ColorConverter.ConvertFromString("#34354b");
 
         int cols = (int)(gridWidth / spacing);

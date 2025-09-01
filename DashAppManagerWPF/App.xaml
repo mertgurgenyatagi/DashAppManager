@@ -4,8 +4,17 @@
              xmlns:local="clr-namespace:DashAppManagerWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <FontFamily x:Key="InterBlack">pack://application:,,,/assets/fonts/Inter_24pt-Black.ttf#Inter Black</FontFamily>
-        <FontFamily x:Key="InterThinItalic">pack://application:,,,/assets/fonts/Inter_24pt-ThinItalic.ttf#Inter Thin Italic</FontFamily>
-        <FontFamily x:Key="InterExtraBoldItalic">pack://application:,,,/assets/fonts/Inter_24pt-ExtraBoldItalic.ttf#Inter ExtraBold Italic</FontFamily>
+        <FontFamily x:Key="FaibleBlack">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-black.otf#Faible Black</FontFamily>
+        <FontFamily x:Key="FaibleBlackItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-blackitalic.otf#Faible Black Italic</FontFamily>
+        <FontFamily x:Key="FaibleBold">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-bold.otf#Faible Bold</FontFamily>
+        <FontFamily x:Key="FaibleBoldItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-bolditalic.otf#Faible Bold Italic</FontFamily>
+        <FontFamily x:Key="FaibleLight">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-light.otf#Faible Light</FontFamily>
+        <FontFamily x:Key="FaibleLightItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-lightitalic.otf#Faible Light Italic</FontFamily>
+        <FontFamily x:Key="FaibleMedium">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-medium.otf#Faible Medium</FontFamily>
+        <FontFamily x:Key="FaibleMediumItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-mediumitalic.otf#Faible Medium Italic</FontFamily>
+        <FontFamily x:Key="FaibleRegular">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-regular.otf#Faible Regular</FontFamily>
+        <FontFamily x:Key="FaibleRegularItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-regularitalic.otf#Faible Regular Italic</FontFamily>
+        <FontFamily x:Key="FaibleThin">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-thin.otf#Faible Thin</FontFamily>
+        <FontFamily x:Key="FaibleThinItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-thinitalic.otf#Faible Thin Italic</FontFamily>
     </Application.Resources>
 </Application>
