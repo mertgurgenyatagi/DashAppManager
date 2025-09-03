@@ -2,7 +2,6 @@ C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\bin\Debug\net9.0-wi
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\bin\Debug\net9.0-windows\DashAppManagerWPF.deps.json
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\bin\Debug\net9.0-windows\DashAppManagerWPF.runtimeconfig.json
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\bin\Debug\net9.0-windows\DashAppManagerWPF.dll
-C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\bin\Debug\net9.0-windows\DashAppManagerWPF.pdb
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\AIPage.baml
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\CalendarPage.baml
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\ConfigPage.baml
@@ -32,9 +31,7 @@ C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-wi
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.AssemblyInfoInputs.cache
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.AssemblyInfo.cs
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.csproj.CoreCompileInputs.cache
-C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.sourcelink.json
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.dll
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\refint\DashAppManagerWPF.dll
-C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.pdb
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\DashAppManagerWPF.genruntimeconfig.cache
 C:\Users\Mert\Desktop\repos\DashAppManager\DashAppManagerWPF\obj\Debug\net9.0-windows\ref\DashAppManagerWPF.dll

@@ -5,30 +5,99 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
         d:DesignHeight="712" d:DesignWidth="577">
-        <UserControl.Resources>
-            <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
-        </UserControl.Resources>
-    <Canvas x:Name="AITextBoxHost" Width="529" Height="91">
+    <UserControl.Resources>
+        <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
+
+        <!-- Entrance Animations -->
+        <Storyboard x:Key="EntranceAnimation">
+            <!-- Glow Animation -->
+            <DoubleAnimation Storyboard.TargetName="GlowTransform" Storyboard.TargetProperty="Y" From="-218" To="0" Duration="0:0:1.0" EasingFunction="{StaticResource EaseOut}" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="GlowEllipse" Storyboard.TargetProperty="Opacity" From="0" To="0.3" Duration="0:0:0.6" FillBehavior="HoldEnd" />
+            
+            <!-- Logo Animation -->
+            <DoubleAnimation Storyboard.TargetName="LogoTransform" Storyboard.TargetProperty="Y" From="-218" To="0" Duration="0:0:1.0" EasingFunction="{StaticResource EaseOut}" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="LogoImage" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" FillBehavior="HoldEnd" />
+
+            <!-- Text Fade-in -->
+            <DoubleAnimation Storyboard.TargetName="WelcomeText" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" BeginTime="0:0:0.6" />
+            <DoubleAnimation Storyboard.TargetName="HelpText" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" BeginTime="0:0:0.6" />
+
+            <!-- Chatbox Animation -->
+            <DoubleAnimation Storyboard.TargetName="ChatboxTransform" Storyboard.TargetProperty="Y" From="38" To="0" Duration="0:0:0.6" EasingFunction="{StaticResource EaseOut}" />
+        </Storyboard>
+
+        <!-- Looping Pulse Animation -->
+        <Storyboard x:Key="GlowPulseAnimation" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="GlowEllipse" Storyboard.TargetProperty="Opacity" From="0.25" To="0.35" Duration="0:0:1.8" AutoReverse="True" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <Grid x:Name="MiddleWindow">
+        <!-- Blue glow effect behind logo -->
+        <Ellipse x:Name="GlowEllipse" Width="600" Height="600"
+                 HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Margin="-48,-666,0,0"
+                 Opacity="0">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#4D0066FF" Offset="0"/>
+                    <GradientStop Color="#1A0066FF" Offset="0.5"/>
+                    <GradientStop Color="#00000000" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="GlowPulseScale" ScaleX="1" ScaleY="1" />
+                    <TranslateTransform x:Name="GlowTransform" Y="-218" />
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        
+        <!-- Simple animated logo for AI page -->
+        <Image x:Name="LogoImage" Source="pack://application:,,,/assets/images/dashapp_logo.png" 
+               Width="126" Height="126"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="199,-429,0,0"
+               Opacity="0"
+               RenderTransformOrigin="0.5,0.5"
+               CacheMode="BitmapCache"
+               RenderOptions.BitmapScalingMode="LowQuality"
+               RenderOptions.ClearTypeHint="Enabled">
+            <Image.RenderTransform>
+                <TranslateTransform x:Name="LogoTransform" Y="-218" />
+            </Image.RenderTransform>
+        </Image>
+        
+        <!-- Fading in texts under the Dashapp logo -->
+    <TextBlock x:Name="WelcomeText"
+           Text="Welcome to DashApp AI"
+           FontSize="16"
+           FontFamily="pack://application:,,,/assets/fonts/#Inter"
+           FontWeight="SemiBold"
+           Foreground="#888"
+           Opacity="0"
+           HorizontalAlignment="Center" VerticalAlignment="Top"
+           Margin="-26.5,-293,0,0"/>
+    <TextBlock x:Name="HelpText"
+           Text="How can I help?"
+           FontSize="32"
+           FontFamily="pack://application:,,,/assets/fonts/#Inter"
+           FontWeight="Bold"
+           Foreground="White"
+           Opacity="0"
+           HorizontalAlignment="Center" VerticalAlignment="Top"
+           Margin="-26.5,-263,0,0"/>
+    <!-- ...existing code... -->
+        
+        <Canvas x:Name="AITextBoxHost" Width="529" Height="91">
             <Canvas.RenderTransform>
                 <TranslateTransform x:Name="ChatboxTransform" Y="38" />
             </Canvas.RenderTransform>
-            <Canvas.Triggers>
-                <EventTrigger RoutedEvent="Canvas.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                Storyboard.TargetName="ChatboxTransform"
-                                Storyboard.TargetProperty="Y"
-                                From="38" To="0" Duration="0:0:0.6"
-                                EasingFunction="{StaticResource EaseOut}" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Canvas.Triggers>
         <Canvas.Clip>
             <RectangleGeometry Rect="0,0,529,91" RadiusX="23" RadiusY="13" />
         </Canvas.Clip>
-        <TextBox
+        <!-- Placeholder overlay -->
+        <TextBox x:Name="AITextBox"
             Width="475"
             Height="57"
             Canvas.Left="27"
@@ -47,6 +116,31 @@
             AcceptsReturn="True"
             BorderThickness="0"
             BorderBrush="Transparent"/>
+        <TextBlock Text="What do you need help with?"
+                   Width="475"
+                   Height="57"
+                   Canvas.Left="27"
+                   Canvas.Top="17"
+                   FontFamily="pack://application:,,,/assets/fonts/Inter_18pt-Regular.ttf#Inter"
+                   FontSize="13.2"
+                   Foreground="#888"
+                   Padding="0,0,0,0"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   IsHitTestVisible="False">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=AITextBox}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=AITextBox}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <Rectangle
             Width="529"
             Height="91"
@@ -60,4 +154,6 @@
             </Rectangle.Effect>
         </Rectangle>
     </Canvas>
+    </Grid>
+    </Grid>
 </UserControl>

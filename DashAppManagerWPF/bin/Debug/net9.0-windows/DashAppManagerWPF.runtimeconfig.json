@@ -12,7 +12,9 @@
       }
     ],
     "configProperties": {
+      "System.GC.Server": false,
       "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false,
+      "System.Runtime.TieredCompilation": true,
       "CSWINRT_USE_WINDOWS_UI_XAML_PROJECTIONS": false
     }
   }

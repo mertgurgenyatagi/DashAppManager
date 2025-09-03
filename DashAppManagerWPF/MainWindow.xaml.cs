@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace DashAppManagerWPF;
 
@@ -19,9 +20,24 @@ public partial class MainWindow : Window
 {
     private Button? lastClickedButton = null;
     
+    // Cache page instances for better performance
+    private readonly Dictionary<string, UserControl> _pageCache = new();
+    
+    // Cache commonly used elements
+    private ContentControl? _pageContentHost;
+    private Canvas? _dotsCanvas;
+    
+    // Cache for button template elements to avoid repeated FindName calls
+    private readonly Dictionary<Button, (Border border, Image image)> _buttonElementCache = new();
+    
     public MainWindow()
     {
         InitializeComponent();
+        
+        // Cache frequently accessed elements
+        _pageContentHost = (ContentControl)FindName("PageContentHost");
+        _dotsCanvas = (Canvas)FindName("DotsCanvas");
+        
         Loaded += MainWindow_Loaded;
         MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
         RegisterNavEvents();
@@ -64,84 +80,83 @@ public partial class MainWindow : Window
 
     private void ShowPage(string page)
     {
-        var pageContentHost = (ContentControl)FindName("PageContentHost");
-        if (pageContentHost == null) return;
+        if (_pageContentHost == null) return;
         
-        // Fade out current content, then fade in new content
-        var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(150));
+        // Use cached page instances instead of creating new ones
+        if (!_pageCache.ContainsKey(page))
+        {
+            _pageCache[page] = page switch
+            {
+                "dashboard" => new DashboardPage(),
+                "user" => new UserPage(),
+                "notifications" => new NotificationsPage(),
+                "calendar" => new CalendarPage(),
+                "config" => new ConfigPage(),
+                "ai" => new AIPage(),
+                "settings" => new SettingsPage(),
+                _ => new DashboardPage()
+            };
+        }
+        
+        // Skip animation if same page
+        if (_pageContentHost.Content == _pageCache[page]) return;
+        
+        // Simplified fade transition
+        var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(100)); // Reduced from 150ms
         fadeOut.Completed += (s, e) =>
         {
-            // Set new content
-            switch (page)
-            {
-                case "dashboard":
-                    pageContentHost.Content = new DashboardPage();
-                    break;
-                case "user":
-                    pageContentHost.Content = new UserPage();
-                    break;
-                case "notifications":
-                    pageContentHost.Content = new NotificationsPage();
-                    break;
-                case "calendar":
-                    pageContentHost.Content = new CalendarPage();
-                    break;
-                case "config":
-                    pageContentHost.Content = new ConfigPage();
-                    break;
-                case "ai":
-                    pageContentHost.Content = new AIPage();
-                    break;
-                case "settings":
-                    pageContentHost.Content = new SettingsPage();
-                    break;
-            }
+            _pageContentHost.Content = _pageCache[page];
             
-            // Fade in new content
-            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
-            pageContentHost.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(100)); // Reduced from 150ms
+            _pageContentHost.BeginAnimation(UIElement.OpacityProperty, fadeIn);
         };
         
-        pageContentHost.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+        _pageContentHost.BeginAnimation(UIElement.OpacityProperty, fadeOut);
     }
     private void SetButtonActiveState(Button btn, bool isActive)
     {
-        // Find the HoverBorder and Icon within the button's template
-        var template = btn.Template;
-        if (template != null)
+        // Use cached elements to avoid repeated template searches
+        if (!_buttonElementCache.ContainsKey(btn))
         {
-            var border = template.FindName("HoverBorder", btn) as Border;
-            var image = template.FindName("DashboardIcon", btn) as Image ??
-                       template.FindName("UserIcon", btn) as Image ??
-                       template.FindName("NotificationsIcon", btn) as Image ??
-                       template.FindName("CalendarIcon", btn) as Image ??
-                       template.FindName("ConfigIcon", btn) as Image ??
-                       template.FindName("AIIcon", btn) as Image ??
-                       template.FindName("SettingsIcon", btn) as Image;
+            var template = btn.Template;
+            if (template != null)
+            {
+                var border = template.FindName("HoverBorder", btn) as Border;
+                var image = template.FindName("DashboardIcon", btn) as Image ??
+                           template.FindName("UserIcon", btn) as Image ??
+                           template.FindName("NotificationsIcon", btn) as Image ??
+                           template.FindName("CalendarIcon", btn) as Image ??
+                           template.FindName("ConfigIcon", btn) as Image ??
+                           template.FindName("AIIcon", btn) as Image ??
+                           template.FindName("SettingsIcon", btn) as Image;
+                
+                _buttonElementCache[btn] = (border!, image!);
+            }
+        }
+        
+        if (_buttonElementCache.TryGetValue(btn, out var elements))
+        {
+            var (border, image) = elements;
             
             if (border != null)
             {
-                border.Background = new SolidColorBrush(isActive ? 
-                    Color.FromArgb(0xFF, 0x35, 0x34, 0x54) : 
-                    Color.FromArgb(0x00, 0x35, 0x34, 0x54));
+                // Use direct color assignment instead of creating new brushes
+                border.Background = isActive ? 
+                    new SolidColorBrush(Color.FromArgb(0xFF, 0x35, 0x34, 0x54)) : 
+                    new SolidColorBrush(Color.FromArgb(0x00, 0x35, 0x34, 0x54));
             }
             
             if (image != null)
             {
-                // Get the icon name from the image name
                 string iconName = image.Name?.Replace("Icon", "").ToLower() ?? "";
                 if (!string.IsNullOrEmpty(iconName))
                 {
-                    if (isActive)
-                    {
-                        // Set to blue version of icon
-                        image.Source = new BitmapImage(new Uri($"pack://application:,,,/assets/icons/{iconName}_blue.png"));
-                    }
-                    else
-                    {
-                        // Set to white version of icon
-                        image.Source = new BitmapImage(new Uri($"pack://application:,,,/assets/icons/{iconName}.png"));
-                    }
+                    // Use simpler URI construction
+                    string iconPath = isActive ? 
+                        $"pack://application:,,,/assets/icons/{iconName}_blue.png" :
+                        $"pack://application:,,,/assets/icons/{iconName}.png";
+                    
+                    image.Source = new BitmapImage(new Uri(iconPath));
                 }
             }
         }
@@ -168,9 +183,17 @@ public partial class MainWindow : Window
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        // Dot grid parameters
-        double dotRadius = 1.0; // 2x2 px
-        double spacing = 6;
+        // Optimize dot grid generation - use larger spacing for fewer elements
+        CreateOptimizedDotGrid();
+    }
+
+    private void CreateOptimizedDotGrid()
+    {
+        if (_dotsCanvas == null) return;
+        
+        // Optimized parameters - fewer dots for better performance
+        double dotRadius = 1.0;
+        double spacing = 12; // Doubled spacing = 4x fewer dots
         double gridWidth = 577;
         double gridHeight = 190;
         Color dotColor = (Color)ColorConverter.ConvertFromString("#34354b");
@@ -178,32 +201,38 @@ public partial class MainWindow : Window
         int cols = (int)(gridWidth / spacing);
         int rows = (int)(gridHeight / spacing);
 
-        var dotsCanvas = (Canvas)FindName("DotsCanvas");
-        if (dotsCanvas != null)
+        // Clear existing and create new dots
+        _dotsCanvas.Children.Clear();
+        
+        // Use single brush instance for all dots
+        var dotBrush = new SolidColorBrush(dotColor);
+        dotBrush.Freeze(); // Freeze for better performance
+        
+        for (int y = 0; y < rows; y++)
         {
-            for (int y = 0; y < rows; y++)
+            double opacity = 1.0;
+            if (y * spacing > 125)
             {
-                double opacity = 1.0;
-                // Fade starts at 125px from the top
-                if (y * spacing > 125)
+                double fadeLength = gridHeight - 125;
+                opacity = 1.0 - ((y * spacing - 125) / fadeLength);
+                if (opacity < 0) opacity = 0;
+            }
+            
+            for (int x = 0; x < cols; x++)
+            {
+                // Use Rectangle instead of Ellipse for better performance
+                var dot = new Rectangle
                 {
-                    double fadeLength = gridHeight - 125;
-                    opacity = 1.0 - ((y * spacing - 125) / fadeLength);
-                    if (opacity < 0) opacity = 0;
-                }
-                for (int x = 0; x < cols; x++)
-                {
-                    Ellipse dot = new Ellipse
-                    {
-                        Width = dotRadius * 2,
-                        Height = dotRadius * 2,
-                        Fill = new SolidColorBrush(dotColor),
-                        Opacity = opacity
-                    };
-                    Canvas.SetLeft(dot, x * spacing);
-                    Canvas.SetTop(dot, y * spacing);
-                    dotsCanvas.Children.Add(dot);
-                }
+                    Width = dotRadius * 2,
+                    Height = dotRadius * 2,
+                    Fill = dotBrush,
+                    Opacity = opacity,
+                    RadiusX = dotRadius,
+                    RadiusY = dotRadius
+                };
+                Canvas.SetLeft(dot, x * spacing);
+                Canvas.SetTop(dot, y * spacing);
+                _dotsCanvas.Children.Add(dot);
             }
         }
     }

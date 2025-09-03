@@ -6,6 +6,9 @@
                 xmlns:local="clr-namespace:DashAppManagerWPF"
                 mc:Ignorable="d"
                 Title="MainWindow" Height="752" Width="1057" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
+        <Window.Resources>
+                <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
+        </Window.Resources>
         <Grid>
                 <Canvas>
                                         <!-- All rectangles: round all corners, offset 20px from window edge -->
@@ -248,7 +251,11 @@
                                                                                                                                                                                                                                                 <Border Canvas.Left="83" Canvas.Top="0" Width="577" Height="712" CornerRadius="20" Background="#0e121a" />
                                                                                                                                                                                                                                                 <!-- Middle window: transparent overlay for dots and rounded corners -->
                                                                                                                                                                                                                                                 <Border Canvas.Left="83" Canvas.Top="0" Width="577" Height="712" CornerRadius="20" Background="Transparent">
-                                                                                                                                                                                                                                                                                                                                                                        <Canvas x:Name="DotsCanvas" Width="577" Height="712" />
+                                                                                                                                                                                                                                                    <Canvas x:Name="DotsCanvas" Width="577" Height="712">
+                                                                                                                                                                                                                                                        <Canvas.RenderTransform>
+                                                                                                                                                                                                                                                            <TranslateTransform X="5" Y="0" />
+                                                                                                                                                                                                                                                        </Canvas.RenderTransform>
+                                                                                                                                                                                                                                                    </Canvas>
                                                                                                                                                                                                                                                 </Border>
                                                                                                                                                                 <!-- Page Content Host -->
                                                                                                                                                                 <ContentControl x:Name="PageContentHost" Canvas.Left="108" Canvas.Top="584" Width="529" Height="91">
@@ -292,6 +299,13 @@
                                                                                                                                                 </ControlTemplate>
                                                                                                                                         </Button.Template>
                                                                                 </Button>
+                
+                <!-- App-wide Canvas for absolute positioning across the entire application -->
+                <Canvas x:Name="AppCanva" IsHitTestVisible="False" Width="1057" Height="752" Background="Transparent"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        RenderOptions.EdgeMode="Aliased"
+                        UseLayoutRounding="True">
+                </Canvas>
                 </Canvas>
         </Grid>
 </Window>
