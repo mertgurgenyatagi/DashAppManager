@@ -16,5 +16,6 @@
         <FontFamily x:Key="FaibleRegularItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-regularitalic.otf#Faible Regular Italic</FontFamily>
         <FontFamily x:Key="FaibleThin">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-thin.otf#Faible Thin</FontFamily>
         <FontFamily x:Key="FaibleThinItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-thinitalic.otf#Faible Thin Italic</FontFamily>
+        <FontFamily x:Key="InterBold">pack://application:,,,/assets/fonts/Inter_18pt-Bold.ttf#Inter</FontFamily>
     </Application.Resources>
 </Application>

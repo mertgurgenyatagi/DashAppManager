@@ -1,0 +1,63 @@
+<UserControl x:Class="DashAppManagerWPF.AIPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+        d:DesignHeight="712" d:DesignWidth="577">
+        <UserControl.Resources>
+            <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
+        </UserControl.Resources>
+    <Canvas x:Name="AITextBoxHost" Width="529" Height="91">
+            <Canvas.RenderTransform>
+                <TranslateTransform x:Name="ChatboxTransform" Y="38" />
+            </Canvas.RenderTransform>
+            <Canvas.Triggers>
+                <EventTrigger RoutedEvent="Canvas.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChatboxTransform"
+                                Storyboard.TargetProperty="Y"
+                                From="38" To="0" Duration="0:0:0.6"
+                                EasingFunction="{StaticResource EaseOut}" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Canvas.Triggers>
+        <Canvas.Clip>
+            <RectangleGeometry Rect="0,0,529,91" RadiusX="23" RadiusY="13" />
+        </Canvas.Clip>
+        <TextBox
+            Width="475"
+            Height="57"
+            Canvas.Left="27"
+            Canvas.Top="17"
+            Background="Transparent"
+            FontFamily="pack://application:,,,/assets/fonts/Inter_18pt-Regular.ttf#Inter"
+            FontSize="13.2"
+            Foreground="White"
+            IsReadOnly="False"
+            IsEnabled="True"
+            CaretBrush="White"
+            VerticalContentAlignment="Top"
+            HorizontalContentAlignment="Left"
+            Padding="0,0,0,0"
+            TextWrapping="Wrap"
+            AcceptsReturn="True"
+            BorderThickness="0"
+            BorderBrush="Transparent"/>
+        <Rectangle
+            Width="529"
+            Height="91"
+            RadiusX="23"
+            RadiusY="13"
+            Stroke="#B0B0B0"
+            StrokeThickness="2"
+            IsHitTestVisible="False">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="White" BlurRadius="32" ShadowDepth="0" Opacity="0.999" />
+            </Rectangle.Effect>
+        </Rectangle>
+    </Canvas>
+</UserControl>
