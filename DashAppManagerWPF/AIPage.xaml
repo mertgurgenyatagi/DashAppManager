@@ -31,13 +31,19 @@
             <DoubleAnimation Storyboard.TargetName="GlowEllipse" Storyboard.TargetProperty="Opacity" From="0.25" To="0.35" Duration="0:0:1.8" AutoReverse="True" />
         </Storyboard>
     </UserControl.Resources>
-    <Border BorderBrush="Orange" BorderThickness="1">
-        <Grid>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="577*"/>
+            <ColumnDefinition Width="397*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Middle Section Grid -->
+        <Grid x:Name="AIMiddleGrid" Grid.Column="0">
             <Grid x:Name="MiddleWindow">
             <!-- Blue glow effect behind logo -->
             <Ellipse x:Name="GlowEllipse" Width="600" Height="600"
-                     HorizontalAlignment="Left" VerticalAlignment="Top"
-                     Margin="-48,-666,0,0"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     Margin="-20,-235,0,0"
                      Opacity="0">
                 <Ellipse.Fill>
                     <RadialGradientBrush>
@@ -57,8 +63,8 @@
             <!-- Simple animated logo for AI page -->
             <Image x:Name="LogoImage" Source="pack://application:,,,/assets/images/dashapp_logo.png" 
                    Width="126" Height="126"
-                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                   Margin="199,-429,0,0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Margin="0,-240,0,0"
                    Opacity="0"
                    RenderTransformOrigin="0.5,0.5"
                    CacheMode="BitmapCache"
@@ -77,8 +83,8 @@
                FontWeight="SemiBold"
                Foreground="#888"
                Opacity="0"
-               HorizontalAlignment="Center" VerticalAlignment="Top"
-               Margin="-26.5,-293,0,0"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Margin="0,-40,0,0"/>
         <TextBlock x:Name="HelpText"
                Text="How can I help?"
                FontSize="32"
@@ -86,10 +92,10 @@
                FontWeight="Bold"
                Foreground="White"
                Opacity="0"
-               HorizontalAlignment="Center" VerticalAlignment="Top"
-               Margin="-26.5,-263,0,0"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Margin="0,40,0,0"/>
             
-            <Canvas x:Name="AITextBoxHost" Width="529" Height="91">
+            <Canvas x:Name="AITextBoxHost" Width="529" Height="91" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,50" CacheMode="BitmapCache">
                 <Canvas.RenderTransform>
                     <TranslateTransform x:Name="ChatboxTransform" Y="38" />
                 </Canvas.RenderTransform>
@@ -230,5 +236,136 @@
             </Canvas>
         </Grid>
         </Grid>
-    </Border>
+
+        <!-- Right Section Grid -->
+        <Grid x:Name="AISubGrid" Grid.Column="1">
+            <StackPanel VerticalAlignment="Top" Margin="20,20,20,0">
+                
+                <!-- New chat button -->
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,20" Height="40">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,12">
+                                    <Image Source="pack://application:,,,/assets/icons/new_chat.png" Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="New chat" Foreground="White" VerticalAlignment="Center" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- Previous chats title -->
+                <TextBlock Text="Previous chats" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="12,0,0,12"/>
+
+                <!-- Chat history items -->
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,8" MinHeight="32">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <TextBlock Text="Sprite sheet creation" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,8" MinHeight="32">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <TextBlock Text="Improve DALL E prompt" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,8" MinHeight="32">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <TextBlock Text="Bird animation request" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
 </UserControl>

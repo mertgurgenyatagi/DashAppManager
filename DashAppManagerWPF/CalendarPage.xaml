@@ -4,8 +4,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
-    d:DesignHeight="712" d:DesignWidth="577">
-    <Grid Background="Transparent">
-        <TextBlock Text="Calendar Page" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    d:DesignHeight="712" d:DesignWidth="974">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="577*"/>
+            <ColumnDefinition Width="397*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Middle Section Grid -->
+        <Border BorderBrush="Orange" BorderThickness="2" Grid.Column="0">
+            <Grid x:Name="CalendarMiddleGrid">
+                <TextBlock Text="Calendar Page" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Right Section Grid -->
+        <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1">
+            <Grid x:Name="CalendarSubGrid">
+                <!-- Content for the right section goes here -->
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

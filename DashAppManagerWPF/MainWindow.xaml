@@ -258,7 +258,10 @@
                                                                                                                                                                                                                                                     </Canvas>
                                                                                                                                                                                                                                                 </Border>
                                                                                                                                                                 <!-- Page Content Host -->
-                                                                                                                                                                <ContentControl x:Name="PageContentHost" Canvas.Left="108" Canvas.Top="584" Width="529" Height="91">
+                                                                                                                                                                                                                                                                                                                                <!-- Right section backdrop - behind page content -->
+                                                                                <Border Canvas.Left="660" Canvas.Top="0" Width="397" Height="712" CornerRadius="20" Background="#141720" Panel.ZIndex="-1" />
+                                                                                <!-- Page Content Host -->
+                                                                                <ContentControl x:Name="PageContentHost" Canvas.Left="83" Canvas.Top="0" Width="974" Height="712">
                                                                                                                                                                     <ContentControl.Style>
                                                                                                                                                                         <Style TargetType="ContentControl">
                                                                                                                                                                             <Setter Property="Opacity" Value="1"/>
@@ -274,7 +277,6 @@
                                                                                                                                                                         </Style>
                                                                                                                                                                     </ContentControl.Style>
                                                                                                                                                                 </ContentControl>
-                                                                                <Border Canvas.Left="660" Canvas.Top="0" Width="397" Height="712" CornerRadius="20" Background="#141720" />
                                         <!-- Logo padded 20px from top and left -->
                                                                                 <Button x:Name="LogoButton" Width="40" Height="40" Canvas.Left="20" Canvas.Top="20" Background="Transparent" BorderThickness="0" Focusable="False">
                                                                                                                                         <Button.Template>

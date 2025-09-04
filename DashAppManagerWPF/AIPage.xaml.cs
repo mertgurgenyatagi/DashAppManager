@@ -16,19 +16,29 @@ namespace DashAppManagerWPF
 
         private void AIPage_Loaded(object sender, RoutedEventArgs e)
         {
-            // Always start the looping pulse animation
-            if (this.Resources["GlowPulseAnimation"] is Storyboard pulseStoryboard)
+            if (!_animationPlayed)
             {
-                pulseStoryboard.Begin(this, true);
+                _animationPlayed = true;
+
+                if (this.Resources["EntranceAnimation"] is Storyboard entranceStoryboard)
+                {
+                    // When the entrance animation is complete, start the looping pulse
+                    entranceStoryboard.Completed += (s, ev) => {
+                        if (this.Resources["GlowPulseAnimation"] is Storyboard pulseStoryboard)
+                        {
+                            pulseStoryboard.Begin(this, true);
+                        }
+                    };
+                    entranceStoryboard.Begin(this, true);
+                }
             }
-
-            if (_animationPlayed) return;
-            _animationPlayed = true;
-
-            // Start the one-time entrance animation
-            if (this.Resources["EntranceAnimation"] is Storyboard entranceStoryboard)
+            else
             {
-                entranceStoryboard.Begin(this, true);
+                // If we are returning to the page, just make sure the pulse is running.
+                if (this.Resources["GlowPulseAnimation"] is Storyboard pulseStoryboard)
+                {
+                    pulseStoryboard.Begin(this, true);
+                }
             }
         }
     }
