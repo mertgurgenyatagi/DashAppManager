@@ -1,0 +1,28 @@
+# Build output
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# .NET build artifacts
+**/bin/**
+**/obj/**
+**/*.cache
+**/*.dll
+**/*.exe
+**/*.pdb
+
+# Temporary build files
+**/*_wpftmp*
+
+# Visual Studio temporary files
+*.tmp
+*.temp
