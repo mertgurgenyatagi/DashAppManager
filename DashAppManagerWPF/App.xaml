@@ -4,6 +4,185 @@
              xmlns:local="clr-namespace:DashAppManagerWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!-- Mark All as Read Button Style with Icon -->
+        <Style x:Key="MarkAllAsReadButton" TargetType="Button">
+            <Setter Property="Background" Value="#2563eb"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Width" Value="144"/>
+            <Setter Property="Height" Value="29"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="pack://application:,,,/assets/icons/seen.png" Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="White" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sort Button With Icon Style -->
+        <Style x:Key="SortButtonWithIcon" TargetType="Button">
+            <Setter Property="Background" Value="#0e121a"/>
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="97"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Image x:Name="ButtonIcon" Source="pack://application:,,,/assets/icons/sort.png" Width="16" Height="16" Margin="-1,0,4,0" VerticalAlignment="Center"/>
+                                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <Canvas Grid.Column="2" Width="12" Height="12" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4.5,0,0,0">
+                                    <Path x:Name="ArrowPath" Data="M2,5 L6,9 L10,5" Stroke="#999999" StrokeThickness="1.5" Fill="Transparent"/>
+                                </Canvas>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" To="White" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" To="White" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="White" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" To="#999999" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" To="#999999" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#555555" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="ButtonIcon" Property="Source" Value="pack://application:,,,/assets/icons/sort_blue.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Type Button With Icon Style -->
+        <Style x:Key="TypeButtonWithIcon" TargetType="Button">
+            <Setter Property="Background" Value="#0e121a"/>
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="97"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Image x:Name="ButtonIcon" Source="pack://application:,,,/assets/icons/type.png" Width="16" Height="16" Margin="-1,0,4,0" VerticalAlignment="Center"/>
+                                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <Canvas Grid.Column="2" Width="12" Height="12" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4.5,0,0,0">
+                                    <Path x:Name="ArrowPath" Data="M2,5 L6,9 L10,5" Stroke="#999999" StrokeThickness="1.5" Fill="Transparent"/>
+                                </Canvas>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" To="White" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" To="White" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="White" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" To="#999999" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" To="#999999" Duration="0:0:0.15"/>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#555555" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="ButtonIcon" Property="Source" Value="pack://application:,,,/assets/icons/type_blue.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Search TextBox Style -->
+        <Style x:Key="SearchTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="#CCC"/>
+            <Setter Property="BorderBrush" Value="#444"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <FontFamily x:Key="FaibleBlack">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-black.otf#Faible Black</FontFamily>
         <FontFamily x:Key="FaibleBlackItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-blackitalic.otf#Faible Black Italic</FontFamily>
         <FontFamily x:Key="FaibleBold">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-bold.otf#Faible Bold</FontFamily>
@@ -17,5 +196,65 @@
         <FontFamily x:Key="FaibleThin">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-thin.otf#Faible Thin</FontFamily>
         <FontFamily x:Key="FaibleThinItalic">pack://application:,,,/assets/fonts/Fontspring-DEMO-faible-thinitalic.otf#Faible Thin Italic</FontFamily>
         <FontFamily x:Key="InterBold">pack://application:,,,/assets/fonts/Inter_18pt-Bold.ttf#Inter</FontFamily>
+
+        <!-- Primary Button Style -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#6C63FF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary Button Style -->
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Filter Button Style -->
+        <Style x:Key="FilterButton" TargetType="Button">
+            <Setter Property="Background" Value="#3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/assets/fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

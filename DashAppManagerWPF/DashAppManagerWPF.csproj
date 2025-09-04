@@ -40,6 +40,11 @@
       <Resource Include="assets/icons/send_blue.png" />
       <Resource Include="assets/icons/new_chat.png" />
       <Resource Include="assets/icons/new_chat_blue.png" />
+      <Resource Include="assets/icons/seen.png" />
+      <Resource Include="assets/icons/type.png" />
+      <Resource Include="assets/icons/sort.png" />
+      <Resource Include="assets/icons/type_blue.png" />
+      <Resource Include="assets/icons/sort_blue.png" />
   <Resource Include="assets/fonts/Inter_18pt-Black.ttf" />
   <Resource Include="assets/fonts/Inter_18pt-BlackItalic.ttf" />
   <Resource Include="assets/fonts/Inter_18pt-Bold.ttf" />
