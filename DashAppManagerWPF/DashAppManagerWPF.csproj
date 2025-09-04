@@ -1,5 +1,4 @@
-﻿
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -35,6 +34,10 @@
       <Resource Include="assets/icons/config_blue.png" />
       <Resource Include="assets/icons/ai_blue.png" />
       <Resource Include="assets/icons/settings_blue.png" />
+      <Resource Include="assets/icons/gallery.png" />
+      <Resource Include="assets/icons/gallery_blue.png" />
+      <Resource Include="assets/icons/send.png" />
+      <Resource Include="assets/icons/send_blue.png" />
   <Resource Include="assets/fonts/Inter_18pt-Black.ttf" />
   <Resource Include="assets/fonts/Inter_18pt-BlackItalic.ttf" />
   <Resource Include="assets/fonts/Inter_18pt-Bold.ttf" />
