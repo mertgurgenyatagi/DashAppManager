@@ -5,7 +5,12 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:local="clr-namespace:DashAppManagerWPF"
                 mc:Ignorable="d"
-                Title="MainWindow" Height="752" Width="1057" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
+                Title="MainWindow" Height="752" Width="1057" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent"
+                RenderOptions.BitmapScalingMode="HighQuality" 
+                RenderOptions.EdgeMode="Aliased" 
+                UseLayoutRounding="True"
+                TextOptions.TextFormattingMode="Display"
+                TextOptions.TextRenderingMode="ClearType">
         <Window.Resources>
                 <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
         </Window.Resources>
@@ -260,23 +265,9 @@
                                                                                                                                                                 <!-- Page Content Host -->
                                                                                                                                                                                                                                                                                                                                 <!-- Right section backdrop - behind page content -->
                                                                                 <Border Canvas.Left="660" Canvas.Top="0" Width="397" Height="712" CornerRadius="20" Background="#141720" Panel.ZIndex="-1" />
-                                                                                <!-- Page Content Host -->
-                                                                                <ContentControl x:Name="PageContentHost" Canvas.Left="83" Canvas.Top="0" Width="974" Height="712">
-                                                                                                                                                                    <ContentControl.Style>
-                                                                                                                                                                        <Style TargetType="ContentControl">
-                                                                                                                                                                            <Setter Property="Opacity" Value="1"/>
-                                                                                                                                                                            <Style.Triggers>
-                                                                                                                                                                                <EventTrigger RoutedEvent="ContentControl.Loaded">
-                                                                                                                                                                                    <BeginStoryboard>
-                                                                                                                                                                                        <Storyboard>
-                                                                                                                                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
-                                                                                                                                                                                        </Storyboard>
-                                                                                                                                                                                    </BeginStoryboard>
-                                                                                                                                                                                </EventTrigger>
-                                                                                                                                                                            </Style.Triggers>
-                                                                                                                                                                        </Style>
-                                                                                                                                                                    </ContentControl.Style>
-                                                                                                                                                                </ContentControl>
+                                                                                <!-- Overlapping Page Content Hosts -->
+                                                                                <ContentControl x:Name="PageContentHost1" Canvas.Left="83" Canvas.Top="0" Width="974" Height="712" Panel.ZIndex="1"/>
+                                                                                <ContentControl x:Name="PageContentHost2" Canvas.Left="83" Canvas.Top="0" Width="974" Height="712" Panel.ZIndex="2"/>
                                         <!-- Logo padded 20px from top and left -->
                                                                                 <Button x:Name="LogoButton" Width="40" Height="40" Canvas.Left="20" Canvas.Top="20" Background="Transparent" BorderThickness="0" Focusable="False">
                                                                                                                                         <Button.Template>
