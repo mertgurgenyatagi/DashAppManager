@@ -160,9 +160,13 @@ public partial class MainWindow : Window
         var newHost = _useHost1 ? _pageContentHost1 : _pageContentHost2;
         var oldHost = _useHost1 ? _pageContentHost2 : _pageContentHost1;
         
+        // Disable hit testing on the old host immediately to prevent ghost button issues
+        oldHost.IsHitTestVisible = false;
+        
         // Set the new page in the new host (initially transparent)
         newHost.Content = newPage;
         newHost.Opacity = 0;
+        newHost.IsHitTestVisible = true; // Ensure new host can receive hits
         
         // Create optimized overlapping animations with faster duration
         var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(150)); // Reduced from 200ms
@@ -177,11 +181,12 @@ public partial class MainWindow : Window
         oldHost.BeginAnimation(UIElement.OpacityProperty, fadeOut);
         newHost.BeginAnimation(UIElement.OpacityProperty, fadeIn);
         
-        // After transition, clear the old host content and toggle for next time
+        // After transition, clear the old host content and reset its state
         fadeOut.Completed += (s, e) =>
         {
             oldHost.Content = null;
             oldHost.Opacity = 1; // Reset for next use
+            oldHost.IsHitTestVisible = true; // Re-enable for future use
         };
         
         // Update current page tracking

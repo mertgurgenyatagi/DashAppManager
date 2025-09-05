@@ -282,5 +282,30 @@
             </Setter>
         </Style>
 
+        <Style x:Key="InfoCard" TargetType="Border">
+            <Setter Property="Background" Value="#141720"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+
+        <Style x:Key="CardValue" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,15,0,10"/>
+        </Style>
+
+        <Style x:Key="CardFooter" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="CardPercentage" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#32CD32"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
     </Application.Resources>
 </Application>
