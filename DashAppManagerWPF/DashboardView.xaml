@@ -5,7 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="712" d:DesignWidth="577">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <Grid>
+        <!-- Invisible Drag Zone (for functionality only) -->
+        <Border x:Name="DragZone" Height="70" VerticalAlignment="Top" Panel.ZIndex="999" 
+                Background="Transparent" Cursor="Arrow">
+        </Border>
+        
+        <!-- Main Content -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="30">
 
             <!-- Header -->
@@ -103,4 +110,5 @@
 
         </StackPanel>
     </ScrollViewer>
+    </Grid>
 </UserControl>

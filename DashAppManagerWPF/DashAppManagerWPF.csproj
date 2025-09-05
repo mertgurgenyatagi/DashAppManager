@@ -19,21 +19,26 @@
 
 
     <ItemGroup>
+      <!-- Images -->
       <Resource Include="assets/images/dashapp_logo.png" />
+      
+      <!-- Navigation Icons -->
       <Resource Include="assets/icons/dashboard.png" />
-      <Resource Include="assets/icons/user.png" />
-      <Resource Include="assets/icons/notifications.png" />
-      <Resource Include="assets/icons/calendar.png" />
-      <Resource Include="assets/icons/config.png" />
-      <Resource Include="assets/icons/ai.png" />
-      <Resource Include="assets/icons/settings.png" />
       <Resource Include="assets/icons/dashboard_blue.png" />
+      <Resource Include="assets/icons/user.png" />
       <Resource Include="assets/icons/user_blue.png" />
+      <Resource Include="assets/icons/notifications.png" />
       <Resource Include="assets/icons/notifications_blue.png" />
+      <Resource Include="assets/icons/calendar.png" />
       <Resource Include="assets/icons/calendar_blue.png" />
+      <Resource Include="assets/icons/config.png" />
       <Resource Include="assets/icons/config_blue.png" />
+      <Resource Include="assets/icons/ai.png" />
       <Resource Include="assets/icons/ai_blue.png" />
+      <Resource Include="assets/icons/settings.png" />
       <Resource Include="assets/icons/settings_blue.png" />
+      
+      <!-- UI Icons -->
       <Resource Include="assets/icons/gallery.png" />
       <Resource Include="assets/icons/gallery_blue.png" />
       <Resource Include="assets/icons/send.png" />
@@ -42,63 +47,16 @@
       <Resource Include="assets/icons/new_chat_blue.png" />
       <Resource Include="assets/icons/seen.png" />
       <Resource Include="assets/icons/type.png" />
-      <Resource Include="assets/icons/sort.png" />
       <Resource Include="assets/icons/type_blue.png" />
+      <Resource Include="assets/icons/sort.png" />
       <Resource Include="assets/icons/sort_blue.png" />
-  <Resource Include="assets/fonts/Inter_18pt-Black.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-BlackItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-Bold.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-BoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-ExtraBold.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-ExtraBoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-ExtraLight.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-ExtraLightItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-Italic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-Light.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-LightItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-Medium.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-MediumItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-Regular.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-SemiBold.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-SemiBoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-Thin.ttf" />
-  <Resource Include="assets/fonts/Inter_18pt-ThinItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Black.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-BlackItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Bold.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-BoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-ExtraBold.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-ExtraBoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-ExtraLight.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-ExtraLightItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Italic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Light.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-LightItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Medium.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-MediumItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Regular.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-SemiBold.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-SemiBoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-Thin.ttf" />
-  <Resource Include="assets/fonts/Inter_24pt-ThinItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Black.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-BlackItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Bold.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-BoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-ExtraBold.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-ExtraBoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-ExtraLight.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-ExtraLightItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Italic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Light.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-LightItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Medium.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-MediumItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Regular.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-SemiBold.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-SemiBoldItalic.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-Thin.ttf" />
-  <Resource Include="assets/fonts/Inter_28pt-ThinItalic.ttf" />
+      
+      <!-- Fonts -->
+      <Resource Include="assets/fonts/Inter_18pt-Regular.ttf" />
+      <Resource Include="assets/fonts/Inter_18pt-Bold.ttf" />
+      <Resource Include="assets/fonts/Inter_18pt-Medium.ttf" />
+      <Resource Include="assets/fonts/Inter_18pt-Light.ttf" />
+      <Resource Include="assets/fonts/MonsieurLaDoulaise-Regular.ttf" />
     </ItemGroup>
 
 </Project>
