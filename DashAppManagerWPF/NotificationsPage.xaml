@@ -65,8 +65,191 @@
 
             <!-- Notifications List -->
             <Border Grid.Row="2" Background="#0e121a" BorderBrush="#3a3f4a" BorderThickness="1" CornerRadius="8">
-                <ListView x:Name="NotificationsListView" Background="Transparent" BorderThickness="0">
-                </ListView>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="20">
+                        
+                        <!-- Notification 1 - Product Manager -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#9370DB" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="New sprint planning meeting scheduled for next week" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="2 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="Product Manager" Foreground="#9370DB" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 2 - Developer -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#4682B4" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Code review requested for authentication module" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="4 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="Developer" Foreground="#4682B4" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 3 - Designer -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#32CD32" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="New wireframes uploaded to design system" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="6 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="Designer" Foreground="#32CD32" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 4 - QA Tester -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FFD700" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Critical bug found in payment processing flow" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="8 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="QA Tester" Foreground="#FFD700" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 5 - DevOps -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FF6347" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Production deployment completed successfully" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="12 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="DevOps" Foreground="#FF6347" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 6 - Developer (another one) -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#4682B4" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Database migration script ready for review" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="1 day ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="Developer" Foreground="#4682B4" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 7 - Product Manager -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#9370DB" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="User feedback analysis report is now available" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="1 day ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="Product Manager" Foreground="#9370DB" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 8 - Designer -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#32CD32" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Brand guidelines updated with new color palette" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="2 days ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="Designer" Foreground="#32CD32" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 9 - QA Tester -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FFD700" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Test suite execution completed with 98% pass rate" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="2 days ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="QA Tester" Foreground="#FFD700" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification 10 - DevOps -->
+                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="350"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FF6347" VerticalAlignment="Top" Margin="0,4,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
+                                    <TextBlock Text="Server maintenance scheduled for this weekend" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
+                                    <TextBlock Text="3 days ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="DevOps" Foreground="#FF6347" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
+                            </Grid>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
             </Border>
         </Grid>
 
