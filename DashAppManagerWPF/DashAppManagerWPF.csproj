@@ -23,6 +23,7 @@
     <!-- Additional animation performance settings -->
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
+  <ApplicationIcon>assets/images/dashapp_logo.ico</ApplicationIcon>
   </PropertyGroup>
 
 
