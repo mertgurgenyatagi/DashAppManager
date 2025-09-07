@@ -3,266 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DashAppManagerWPF"
-             mc:Ignorable="d" 
-             d:DesignHeight="712" d:DesignWidth="974">
-    <Grid>
+             mc:Ignorable="d">
+    <!-- Only content, no background or border at root -->
+    <Grid IsHitTestVisible="True" ClipToBounds="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="577*"/>
             <ColumnDefinition Width="397*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Middle Section -->
-        <Grid x:Name="NotificationsMiddleGrid" Grid.Column="0" Background="#0e121a" Margin="30">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <!-- Main Section Grid -->
+        <Border Grid.Column="0" Background="#0e121a" CornerRadius="20,20,20,20" Margin="0,0,-1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="40">
 
-            <!-- Header -->
-            <Grid Grid.Row="0" Margin="0,0,0,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+                    <!-- Page Title -->
+                    <TextBlock Text="Tasks" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
 
-                <StackPanel Grid.Column="0">
-                    <TextBlock Text="Notifications" 
-                               Foreground="White" 
-                               FontSize="28" 
-                               FontWeight="Bold" 
-                               FontFamily="pack://application:,,,/assets/fonts/#Inter"/>
-                    <TextBlock Text="Stay updated with your latest activities and messages" 
-                               Foreground="#888" 
-                               FontSize="14" 
-                               FontFamily="pack://application:,,,/assets/fonts/#Inter"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <Grid Height="80">
-                        <Button Style="{StaticResource MarkAllAsReadButton}" VerticalAlignment="Center" Click="MarkAllAsRead_Click">Mark All as Read</Button>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-
-            <!-- Search and Filters -->
-            <Grid Grid.Row="1" Margin="0,0,0,20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <!-- Search Bar -->
-                <TextBox Grid.Row="0" Text="Search notifications..." Style="{StaticResource SearchTextBox}" Margin="0,0,0,10"/>
-
-                <!-- Filter Buttons -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <Button Style="{StaticResource TypeButtonWithIcon}" Margin="0,0,10,0" Click="Type_Click">Type</Button>
-                    <Button Style="{StaticResource SortButtonWithIcon}" Margin="0,0,10,0" Click="Sort_Click">Sort</Button>
-                </StackPanel>
-            </Grid>
-
-            <!-- Notifications List -->
-            <Border Grid.Row="2" Background="#0e121a" BorderBrush="#3a3f4a" BorderThickness="1" CornerRadius="8">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Margin="20">
-                        
-                        <!-- Notification 1 - Product Manager -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#9370DB" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="New sprint planning meeting scheduled for next week" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="2 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Product Manager" Foreground="#9370DB" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 2 - Developer -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#4682B4" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Code review requested for authentication module" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="4 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Developer" Foreground="#4682B4" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 3 - Designer -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#32CD32" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="New wireframes uploaded to design system" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="6 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Designer" Foreground="#32CD32" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 4 - QA Tester -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FFD700" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Critical bug found in payment processing flow" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="8 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="QA Tester" Foreground="#FFD700" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 5 - DevOps -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FF6347" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Production deployment completed successfully" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="12 hours ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="DevOps" Foreground="#FF6347" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 6 - Developer (another one) -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#4682B4" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Database migration script ready for review" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="1 day ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Developer" Foreground="#4682B4" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 7 - Product Manager -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#9370DB" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="User feedback analysis report is now available" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="1 day ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Product Manager" Foreground="#9370DB" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 8 - Designer -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#32CD32" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Brand guidelines updated with new color palette" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="2 days ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Designer" Foreground="#32CD32" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 9 - QA Tester -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FFD700" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Test suite execution completed with 98% pass rate" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="2 days ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="QA Tester" Foreground="#FFD700" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification 10 - DevOps -->
-                        <Border Background="#141720" CornerRadius="10" Padding="20" Margin="0,0,0,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="350"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="12" Height="12" Fill="#FF6347" VerticalAlignment="Top" Margin="0,4,0,0"/>
-                                <StackPanel Grid.Column="1" Margin="15,0,15,0">
-                                    <TextBlock Text="Server maintenance scheduled for this weekend" Foreground="White" FontWeight="Medium" FontSize="14" TextWrapping="Wrap"/>
-                                    <TextBlock Text="3 days ago" Foreground="Gray" FontSize="11" Margin="0,5,0,0"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="DevOps" Foreground="#FF6347" FontSize="12" VerticalAlignment="Top" FontWeight="SemiBold" TextAlignment="Right"/>
-                            </Grid>
-                        </Border>
-
+                    <!-- Task List Panel -->
+                    <StackPanel x:Name="TaskListPanel">
+                        <!-- Tasks will be populated dynamically -->
                     </StackPanel>
-                </ScrollViewer>
-            </Border>
-        </Grid>
 
-        <!-- Right Section Placeholder -->
-        <Border Grid.Column="1" Background="#141720" CornerRadius="20">
-            <Grid x:Name="NotificationsRightGrid">
-                <TextBlock Text="Right Panel" 
-                           FontFamily="pack://application:,,,/assets/fonts/#Inter"
-                           FontSize="16" 
-                           Foreground="#888" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"/>
-            </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Right Section Grid - Currently Empty -->
+        <Border Grid.Column="1" Background="#141720" CornerRadius="20,20,20,20" Margin="-1,0,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="40">
+                    <TextBlock Text="Task Summary" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+                    
+                    <!-- Summary content can be added here later -->
+                    <TextBlock Text="Task overview and statistics will be displayed here." 
+                               Foreground="LightGray" FontSize="14" TextWrapping="Wrap"/>
+                    
+                </StackPanel>
+            </ScrollViewer>
         </Border>
     </Grid>
 </UserControl>

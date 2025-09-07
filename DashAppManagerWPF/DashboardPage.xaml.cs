@@ -4,6 +4,8 @@ using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using System.Windows.Input;
 using System.Windows.Media;
+using DashAppManagerWPF.Models;
+using System.Windows.Media.Imaging;
 
 namespace DashAppManagerWPF
 {
@@ -13,10 +15,12 @@ namespace DashAppManagerWPF
         private bool _useHost1 = true; // Toggle between content hosts for transitions
         private ScrollViewer? _currentHost;
         private ScrollViewer? _nextHost;
+        private List<Profile>? _profiles;
 
         public DashboardPage()
         {
             InitializeComponent();
+            LoadProfiles();
             InitializeTransitionSystem();
             StartTimeTimer();
             
@@ -28,6 +32,19 @@ namespace DashAppManagerWPF
             MouseLeftButtonDown += DashboardPage_MouseLeftButtonDown;
             
             this.Unloaded += DashboardPage_Unloaded;
+        }
+
+        private void LoadProfiles()
+        {
+            try
+            {
+                _profiles = ProfileDataService.LoadProfiles();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading profiles: {ex.Message}");
+                _profiles = new List<Profile>();
+            }
         }
 
         private void InitializeDefaultView()
@@ -143,45 +160,118 @@ namespace DashAppManagerWPF
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-            var ellipse = new System.Windows.Shapes.Ellipse
+            // Get current profile
+            var currentProfile = GetCurrentProfile();
+            
+            if (currentProfile != null)
             {
-                Width = 50,
-                Height = 50,
-                Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 99, 71)),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-            Grid.SetColumn(ellipse, 0);
+                // Create icon border instead of simple ellipse
+                var iconBorder = new Border
+                {
+                    Width = 50,
+                    Height = 50,
+                    CornerRadius = new CornerRadius(25),
+                    Background = GetBrushFromHex(ExtractHexFromIcon(currentProfile.Icon)),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                
+                // Add icon if available
+                if (!string.IsNullOrEmpty(currentProfile.Icon))
+                {
+                    var image = new Image
+                    {
+                        Width = 35,
+                        Height = 35
+                    };
+                    
+                    RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
+                    
+                    try
+                    {
+                        image.Source = new BitmapImage(new Uri($"pack://application:,,,/{currentProfile.Icon}"));
+                    }
+                    catch
+                    {
+                        // Fallback if icon can't be loaded
+                    }
+                    
+                    iconBorder.Child = image;
+                }
+                
+                Grid.SetColumn(iconBorder, 0);
 
-            var textStackPanel = new StackPanel
+                var textStackPanel = new StackPanel
+                {
+                    Margin = new Thickness(15, 0, 0, 0),
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                var titleText = new TextBlock
+                {
+                    Text = currentProfile.Name,
+                    Foreground = System.Windows.Media.Brushes.White,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 16
+                };
+
+                var subtitleText = new TextBlock
+                {
+                    Text = "Active Profile",
+                    Foreground = System.Windows.Media.Brushes.Gray,
+                    FontSize = 12
+                };
+
+                textStackPanel.Children.Add(titleText);
+                textStackPanel.Children.Add(subtitleText);
+                Grid.SetColumn(textStackPanel, 1);
+
+                grid.Children.Add(iconBorder);
+                grid.Children.Add(textStackPanel);
+            }
+            else
             {
-                Margin = new Thickness(15, 0, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center
-            };
+                // No active profile
+                var ellipse = new System.Windows.Shapes.Ellipse
+                {
+                    Width = 50,
+                    Height = 50,
+                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(60, 60, 60)),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Grid.SetColumn(ellipse, 0);
 
-            var titleText = new TextBlock
-            {
-                Text = "Project Manager",
-                Foreground = System.Windows.Media.Brushes.White,
-                FontWeight = FontWeights.Bold,
-                FontSize = 16
-            };
+                var textStackPanel = new StackPanel
+                {
+                    Margin = new Thickness(15, 0, 0, 0),
+                    VerticalAlignment = VerticalAlignment.Center
+                };
 
-            var subtitleText = new TextBlock
-            {
-                Text = "Active Profile",
-                Foreground = System.Windows.Media.Brushes.Gray,
-                FontSize = 12
-            };
+                var titleText = new TextBlock
+                {
+                    Text = "No Active Profile",
+                    Foreground = System.Windows.Media.Brushes.White,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 16
+                };
 
-            textStackPanel.Children.Add(titleText);
-            textStackPanel.Children.Add(subtitleText);
-            Grid.SetColumn(textStackPanel, 1);
+                var subtitleText = new TextBlock
+                {
+                    Text = "Configure profiles",
+                    Foreground = System.Windows.Media.Brushes.Gray,
+                    FontSize = 12
+                };
 
-            grid.Children.Add(ellipse);
-            grid.Children.Add(textStackPanel);
+                textStackPanel.Children.Add(titleText);
+                textStackPanel.Children.Add(subtitleText);
+                Grid.SetColumn(textStackPanel, 1);
+
+                grid.Children.Add(ellipse);
+                grid.Children.Add(textStackPanel);
+            }
+            
             stackPanel.Children.Add(grid);
-
             return stackPanel;
         }
 
@@ -191,7 +281,7 @@ namespace DashAppManagerWPF
 
             var titleText = new TextBlock
             {
-                Text = "Today's Tasks",
+                Text = "Tasks",
                 Foreground = System.Windows.Media.Brushes.White,
                 FontSize = 18,
                 FontWeight = FontWeights.SemiBold,
@@ -199,25 +289,38 @@ namespace DashAppManagerWPF
             };
             stackPanel.Children.Add(titleText);
 
-            // Add task items (simplified for demo)
-            var tasks = new[]
+            // Get current profile tasks
+            var currentProfile = GetCurrentProfile();
+            if (currentProfile != null && currentProfile.Tasks != null && currentProfile.Tasks.Any())
             {
-                ("Review project requirements", "Due: 15:30", "High", System.Windows.Media.Color.FromRgb(50, 205, 50), System.Windows.Media.Color.FromRgb(255, 99, 71)),
-                ("Team standup meeting", "Due: 16:00", "Medium", System.Windows.Media.Color.FromRgb(255, 215, 0), System.Windows.Media.Color.FromRgb(255, 215, 0)),
-                ("Update project documentation", "Due: 17:30", "Low", System.Windows.Media.Color.FromRgb(70, 130, 180), System.Windows.Media.Color.FromRgb(70, 130, 180)),
-                ("Client presentation prep", "Due: Tomorrow 10:00", "High", System.Windows.Media.Color.FromRgb(147, 112, 219), System.Windows.Media.Color.FromRgb(255, 99, 71)),
-                ("Code review session", "Due: Tomorrow 14:00", "Medium", System.Windows.Media.Color.FromRgb(50, 205, 50), System.Windows.Media.Color.FromRgb(255, 215, 0))
-            };
+                // Get the profile's icon color for all task dots
+                var hexColor = ExtractHexFromIcon(currentProfile.Icon);
+                var profileColor = GetColorFromHex(hexColor);
 
-            foreach (var (title, due, priority, dotColor, priorityColor) in tasks)
+                for (int i = 0; i < currentProfile.Tasks.Count; i++)
+                {
+                    var task = currentProfile.Tasks[i];
+                    stackPanel.Children.Add(CreateTaskItem(task, profileColor));
+                }
+            }
+            else
             {
-                stackPanel.Children.Add(CreateTaskItem(title, due, priority, dotColor, priorityColor));
+                // Show "no tasks" message
+                var noTasksText = new TextBlock
+                {
+                    Text = "No tasks for current profile",
+                    Foreground = System.Windows.Media.Brushes.Gray,
+                    FontStyle = FontStyles.Italic,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+                stackPanel.Children.Add(noTasksText);
             }
 
             return stackPanel;
         }
 
-        private Border CreateTaskItem(string title, string due, string priority, System.Windows.Media.Color dotColor, System.Windows.Media.Color priorityColor)
+        private Border CreateTaskItem(string title, System.Windows.Media.Color dotColor)
         {
             var border = new Border
             {
@@ -230,7 +333,6 @@ namespace DashAppManagerWPF
             var grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             var ellipse = new System.Windows.Shapes.Ellipse
             {
@@ -250,29 +352,11 @@ namespace DashAppManagerWPF
                 FontWeight = FontWeights.Medium
             };
 
-            var dueText = new TextBlock
-            {
-                Text = due,
-                Foreground = System.Windows.Media.Brushes.Gray,
-                FontSize = 11
-            };
-
             textStackPanel.Children.Add(titleText);
-            textStackPanel.Children.Add(dueText);
             Grid.SetColumn(textStackPanel, 1);
-
-            var priorityText = new TextBlock
-            {
-                Text = priority,
-                Foreground = new System.Windows.Media.SolidColorBrush(priorityColor),
-                FontSize = 10,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-            Grid.SetColumn(priorityText, 2);
 
             grid.Children.Add(ellipse);
             grid.Children.Add(textStackPanel);
-            grid.Children.Add(priorityText);
             border.Child = grid;
 
             return border;
@@ -385,6 +469,99 @@ namespace DashAppManagerWPF
                     e.Handled = true;
                     parentWindow.DragMove();
                 }
+            }
+        }
+
+        private Profile? GetCurrentProfile()
+        {
+            if (_profiles == null || !_profiles.Any())
+                return null;
+
+            var now = DateTime.Now;
+            var currentTime = now.TimeOfDay;
+
+            foreach (var profile in _profiles)
+            {
+                var startTime = ParseTimeString(profile.StartTime);
+                var endTime = ParseTimeString(profile.EndTime);
+                
+                if (startTime.HasValue && endTime.HasValue)
+                {
+                    if (IsTimeInRange(currentTime, startTime.Value, endTime.Value))
+                    {
+                        return profile;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private TimeSpan? ParseTimeString(string timeString)
+        {
+            if (string.IsNullOrEmpty(timeString))
+                return null;
+
+            if (TimeSpan.TryParse(timeString, out var result))
+                return result;
+
+            return null;
+        }
+
+        private bool IsTimeInRange(TimeSpan currentTime, TimeSpan startTime, TimeSpan endTime)
+        {
+            if (startTime <= endTime)
+            {
+                return currentTime >= startTime && currentTime < endTime;
+            }
+            else
+            {
+                return currentTime >= startTime || currentTime < endTime;
+            }
+        }
+
+        private string ExtractHexFromIcon(string iconPath)
+        {
+            if (string.IsNullOrEmpty(iconPath))
+                return "3dbc93"; // Default color
+
+            var filename = System.IO.Path.GetFileNameWithoutExtension(iconPath);
+            
+            if (filename != null && filename.Length == 6 && IsValidHex(filename))
+            {
+                return filename;
+            }
+
+            return "3dbc93"; // Default fallback
+        }
+
+        private bool IsValidHex(string hex)
+        {
+            return hex.All(c => "0123456789ABCDEFabcdef".Contains(c));
+        }
+
+        private System.Windows.Media.SolidColorBrush GetBrushFromHex(string hex)
+        {
+            try
+            {
+                var color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString($"#{hex}");
+                return new System.Windows.Media.SolidColorBrush(color);
+            }
+            catch
+            {
+                return new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(61, 188, 147)); // Default green
+            }
+        }
+
+        private System.Windows.Media.Color GetColorFromHex(string hex)
+        {
+            try
+            {
+                return (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString($"#{hex}");
+            }
+            catch
+            {
+                return System.Windows.Media.Color.FromRgb(61, 188, 147); // Default green
             }
         }
     }

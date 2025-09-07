@@ -7,156 +7,78 @@
              IsHitTestVisible="False">
     <!-- Only content, no background or border at root -->
     <Grid IsHitTestVisible="True" ClipToBounds="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="577*"/>
-                <ColumnDefinition Width="397*"/>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="577*"/>
+            <ColumnDefinition Width="397*"/>
+        </Grid.ColumnDefinitions>
 
-            <!-- Middle Section Grid -->
-            <Border Grid.Column="0" Background="#0e121a" CornerRadius="20,20,20,20" Margin="0,0,-1,0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="40">
+        <!-- Middle Section Grid -->
+        <Border Grid.Column="0" Background="#0e121a" CornerRadius="20,20,20,20" Margin="0,0,-1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="40">
 
-                        <!-- Profile Title -->
-                        <TextBlock Text="Profile" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+                    <!-- Current Profile Title -->
+                    <TextBlock Text="Current Profile" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
 
-                        <!-- Profile Card - Enlarged -->
-                        <Border Background="#141720" Padding="40" Height="300">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <!-- Profile Picture - Centered -->
-                                <Ellipse Width="120" Height="120" Fill="Gray" HorizontalAlignment="Center"/>
-                                
-                                <!-- User Name - Centered -->
-                                <TextBlock Text="Temitope Aiyegbusi" Foreground="White" FontSize="28" FontWeight="SemiBold" 
-                                          HorizontalAlignment="Center" Margin="0,20,0,0"/>
-                                
-                                <!-- User Info - Below picture -->
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
-                                    <TextBlock Text="36 minutes remaining" Foreground="LightGray" FontSize="16"/>
-                                </StackPanel>
+                    <!-- Profile Card - Enlarged -->
+                    <Border x:Name="ProfileCard" Background="#141720" Padding="40" Height="300">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!-- Profile Icon with Shadow Effect -->
+                            <Border x:Name="ProfileIconBorder" Width="120" Height="120" CornerRadius="60" 
+                                    HorizontalAlignment="Center" Background="#2D3748" Padding="20">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="4" BlurRadius="8" Opacity="0.3"/>
+                                </Border.Effect>
+                                <Image x:Name="ProfileIcon" Source="assets/icons/3dbc93.png" Stretch="Uniform"/>
+                            </Border>
+                            
+                            <!-- Profile Name -->
+                            <TextBlock x:Name="ProfileName" Text="Early Morning Focus" Foreground="White" FontSize="28" FontWeight="Bold" 
+                                      HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                            
+                            <!-- Time Remaining -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                <TextBlock x:Name="TimeRemaining" Text="3h 24m remaining" Foreground="LightGray" FontSize="16" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Time slot section -->
+                    <Grid Margin="0,40,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="TimeSlotBorder" Grid.Column="0" Background="#141720" Padding="15">
+                            <StackPanel>
+                                <TextBlock Text="Time Slot" Foreground="LightGray" FontSize="12"/>
+                                <TextBlock x:Name="TimeSlot" Text="5:00 AM - 9:00 AM" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,5,0,0"/>
                             </StackPanel>
                         </Border>
+                    </Grid>
 
-                        <!-- Time slot section -->
-                        <Grid Margin="0,40,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <!-- Profile Description -->
+                    <TextBlock x:Name="ProfileDescription" 
+                               Text="Deep focus work during quiet morning hours when energy and concentration are at their peak. Perfect for complex problem-solving and creative tasks." 
+                               Foreground="LightGray" FontSize="14" TextWrapping="Wrap" Margin="0,30,0,0"/>
 
-                            <Border Grid.Column="0" Background="#141720" Padding="15">
-                                <StackPanel>
-                                    <TextBlock Text="Time slot" Foreground="LightGray" FontSize="12"/>
-                                    <TextBlock Text="12:00 - 13:00" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,5,0,0"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
 
-                        <!-- Lorem Ipsum Text -->
-                        <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia." 
-                                   Foreground="LightGray" FontSize="14" TextWrapping="Wrap" Margin="0,30,0,0"/>
-
+        <!-- Right Section Grid - Tasks -->
+        <Border Grid.Column="1" Background="#141720" CornerRadius="20,20,20,20" Margin="-1,0,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="40">
+                    <TextBlock Text="Tasks" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+                    
+                    <!-- Tasks will be populated dynamically -->
+                    <StackPanel x:Name="TasksPanel">
+                        <!-- Tasks will be added here dynamically -->
                     </StackPanel>
-                </ScrollViewer>
-            </Border>
-
-            <!-- Right Section Grid -->
-            <Border Grid.Column="1" Background="#141720" CornerRadius="20,20,20,20" Margin="-1,0,0,0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Margin="40">
-                        <TextBlock Text="Tasks" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
-                        
-                        <!-- Task 1 -->
-                        <Border Background="#1e2329" CornerRadius="10" Padding="15" Margin="0,0,0,10">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#32CD32" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                                    <TextBlock Text="Review project requirements" Foreground="White" FontWeight="Medium"/>
-                                    <TextBlock Text="Due: 15:30" Foreground="Gray" FontSize="11"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="High" Foreground="#FF6347" FontSize="10" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Task 2 -->
-                        <Border Background="#1e2329" CornerRadius="10" Padding="15" Margin="0,0,0,10">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#FFD700" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                                    <TextBlock Text="Team standup meeting" Foreground="White" FontWeight="Medium"/>
-                                    <TextBlock Text="Due: 16:00" Foreground="Gray" FontSize="11"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Medium" Foreground="#FFD700" FontSize="10" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Task 3 -->
-                        <Border Background="#1e2329" CornerRadius="10" Padding="15" Margin="0,0,0,10">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#4682B4" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                                    <TextBlock Text="Update project documentation" Foreground="White" FontWeight="Medium"/>
-                                    <TextBlock Text="Due: 17:30" Foreground="Gray" FontSize="11"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Low" Foreground="#4682B4" FontSize="10" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Task 4 -->
-                        <Border Background="#1e2329" CornerRadius="10" Padding="15" Margin="0,0,0,10">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#9370DB" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                                    <TextBlock Text="Client presentation prep" Foreground="White" FontWeight="Medium"/>
-                                    <TextBlock Text="Due: Tomorrow 10:00" Foreground="Gray" FontSize="11"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="High" Foreground="#FF6347" FontSize="10" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- Task 5 -->
-                        <Border Background="#1e2329" CornerRadius="10" Padding="15" Margin="0,0,0,10">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Ellipse Grid.Column="0" Width="8" Height="8" Fill="#32CD32" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                                    <TextBlock Text="Code review session" Foreground="White" FontWeight="Medium"/>
-                                    <TextBlock Text="Due: Tomorrow 14:00" Foreground="Gray" FontSize="11"/>
-                                </StackPanel>
-                                <TextBlock Grid.Column="2" Text="Medium" Foreground="#FFD700" FontSize="10" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-                        
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
+                    
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </UserControl>

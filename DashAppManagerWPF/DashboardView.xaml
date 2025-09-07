@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="712" d:DesignWidth="577">
-<<<<<<< HEAD
     <Grid>
         <!-- Invisible Drag Zone (for functionality only) -->
         <Border x:Name="DragZone" Height="70" VerticalAlignment="Top" Panel.ZIndex="999" 
@@ -14,11 +13,7 @@
         
         <!-- Main Content -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="30">
-=======
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="30,25,30,25">
->>>>>>> UI
 
             <!-- Header -->
             <Grid Margin="0,0,0,20">
@@ -89,19 +84,26 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
                         <TextBlock Text="Current role" Foreground="White" Opacity="0.8" FontSize="16"/>
-                        <TextBlock Text="Project manager" Foreground="White" FontSize="36" FontWeight="Bold" Margin="0,10,0,15"/>
-                        <TextBlock Foreground="White" Opacity="0.8" Margin="0,0,0,20">
+                        <TextBlock x:Name="CurrentRoleName" Text="Project manager" Foreground="White" FontSize="36" FontWeight="Bold" Margin="0,10,0,15"/>
+                        <TextBlock x:Name="CurrentRoleTime" Foreground="White" Opacity="0.8" Margin="0,0,0,20">
                         12:00 - 13:30
                         </TextBlock>
                         
                         <!-- Prominent remaining time display -->
-                        <TextBlock Text="36 minutes remaining" 
+                        <TextBlock x:Name="CurrentRoleRemaining" Text="36 minutes remaining" 
                                    Foreground="White" 
                                    FontSize="18" 
                                    FontWeight="SemiBold" 
                                    Margin="0,0,0,5"/>
                     </StackPanel>
-                    <Ellipse Grid.Column="1" Width="80" Height="80" Fill="#333" VerticalAlignment="Center"/>
+                    <Border Grid.Column="1" Width="80" Height="80" VerticalAlignment="Center" 
+                            CornerRadius="40">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="5" Opacity="0.3"/>
+                        </Border.Effect>
+                        <Image x:Name="CurrentRoleIcon" Width="60" Height="60" 
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Border>
                 </Grid>
             </Border>
 
@@ -134,10 +136,10 @@
                     <StackPanel>
                         <Grid>
                             <Ellipse Width="32" Height="32" Fill="#FF6347" HorizontalAlignment="Left"/>
-                            <TextBlock Text="Current product" Foreground="Gray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                            <TextBlock x:Name="CurrentProductTitle" Text="Current product" Foreground="Gray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                         </Grid>
-                        <TextBlock Text="Stickman Run" Style="{StaticResource CardValue}"/>
-                        <TextBlock Text="Started at 20 July 2024" Style="{StaticResource CardFooter}"/>
+                        <TextBlock x:Name="CurrentProductName" Text="Stickman Run" Style="{StaticResource CardValue}"/>
+                        <TextBlock x:Name="CurrentProductDate" Text="Started at 20 July 2024" Style="{StaticResource CardFooter}"/>
                     </StackPanel>
                 </Border>
 
@@ -170,8 +172,8 @@
                             <Rectangle Width="32" Height="32" Fill="#4682B4" RadiusX="8" RadiusY="8" HorizontalAlignment="Left"/>
                             <TextBlock Text="Time remaining" Foreground="Gray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                         </Grid>
-                        <TextBlock Text="1 day 6 hours" Style="{StaticResource CardValue}"/>
-                        <TextBlock Text="Due at 20 July 2024" Style="{StaticResource CardFooter}"/>
+                        <TextBlock x:Name="CurrentProductDuration" Text="1 day 6 hours" Style="{StaticResource CardValue}"/>
+                        <TextBlock x:Name="CurrentProductStatus" Text="Due at 20 July 2024" Style="{StaticResource CardFooter}"/>
                     </StackPanel>
                 </Border>
 
@@ -204,7 +206,7 @@
                             <Rectangle Width="32" Height="32" Fill="#32CD32" RadiusX="8" RadiusY="8" HorizontalAlignment="Left"/>
                             <TextBlock Text="Unfinished tasks" Foreground="Gray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                         </Grid>
-                        <TextBlock Text="4" Style="{StaticResource CardValue}"/>
+                        <TextBlock x:Name="UnfinishedTasksCount" Text="4" Style="{StaticResource CardValue}"/>
                     </StackPanel>
                 </Border>
 
@@ -237,7 +239,7 @@
                             <Ellipse Width="32" Height="32" Fill="#FFD700" HorizontalAlignment="Left"/>
                             <TextBlock Text="Time left at work" Foreground="Gray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"/>
                         </Grid>
-                        <TextBlock Text="5 h 22 min" Style="{StaticResource CardValue}"/>
+                        <TextBlock x:Name="TimeLeftAtWorkHours" Text="5 h 22 min" Style="{StaticResource CardValue}"/>
                     </StackPanel>
                 </Border>
             </UniformGrid>

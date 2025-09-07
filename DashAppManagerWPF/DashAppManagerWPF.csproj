@@ -51,6 +51,14 @@
       <Resource Include="assets/icons/sort.png" />
       <Resource Include="assets/icons/sort_blue.png" />
       
+      <!-- Colored Profile Icons -->
+      <Resource Include="assets/icons/3dbc93.png" />
+      <Resource Include="assets/icons/58b0e0.png" />
+      <Resource Include="assets/icons/485a69.png" />
+      <Resource Include="assets/icons/a9cf54.png" />
+      <Resource Include="assets/icons/e9573e.png" />
+      <Resource Include="assets/icons/ffc200.png" />
+      
       <!-- Fonts -->
       <Resource Include="assets/fonts/Inter_18pt-Regular.ttf" />
       <Resource Include="assets/fonts/Inter_18pt-Bold.ttf" />

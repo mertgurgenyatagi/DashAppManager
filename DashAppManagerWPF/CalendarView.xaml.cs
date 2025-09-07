@@ -6,18 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using DashAppManagerWPF.Models;
 
 namespace DashAppManagerWPF
 {
-    public class Project
-    {
-        public string Name { get; set; } = string.Empty;
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public SolidColorBrush Color { get; set; } = new SolidColorBrush(Colors.Blue);
-    }
-
     public partial class CalendarView : UserControl
     {
         public static readonly DependencyProperty OnDayClickedProperty =
@@ -61,6 +53,12 @@ namespace DashAppManagerWPF
         public void AddProject(Project project)
         {
             projects.Add(project);
+            PopulateCalendar(currentDate.Year, currentDate.Month);
+        }
+
+        public void ClearProjects()
+        {
+            projects.Clear();
             PopulateCalendar(currentDate.Year, currentDate.Month);
         }
 

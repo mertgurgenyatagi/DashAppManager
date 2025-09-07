@@ -1,174 +1,289 @@
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Linq;
-using System.Collections.Generic;
+using DashAppManagerWPF.Models;
 
 namespace DashAppManagerWPF
 {
     public partial class ConfigPage : UserControl
     {
+        private List<Profile> profiles = new List<Profile>();
         private ObservableCollection<string> currentTasks = new ObservableCollection<string>();
-        private string selectedColor = "#FF6347"; // Default color
+        private string selectedIcon = "assets/icons/3dbc93.png"; // Default icon
         private string? editingProfileId = null; // Track which profile is being edited
 
         public ConfigPage()
         {
             InitializeComponent();
+            LoadProfiles();
             InitializeForm();
+        }
+
+        private void LoadProfiles()
+        {
+            profiles = ProfileDataService.LoadProfiles();
+            RefreshProfileGrid();
         }
 
         private void InitializeForm()
         {
             TasksItemsControl.ItemsSource = currentTasks;
-            
+
             // Initialize time slots
             PopulateTimeSlots();
-            
-            // Set default selected color
-            UpdateColorSelection(ColorOption1);
+
+            // Set default selected icon
+            UpdateIconSelection(IconOption1);
         }
 
         private void PopulateTimeSlots()
         {
             var timeSlots = new List<string>();
-            
-            // Generate time slots from 6:00 AM to 11:30 PM in 30-minute intervals
-            for (int hour = 6; hour <= 23; hour++)
+
+            // Generate time slots from 00:00 to 23:30 in 30-minute intervals
+            for (int hour = 0; hour < 24; hour++)
             {
                 for (int minute = 0; minute < 60; minute += 30)
                 {
-                    string period = hour < 12 ? "AM" : "PM";
-                    int displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
-                    timeSlots.Add($"{displayHour:D2}:{minute:D2} {period}");
+                    timeSlots.Add($"{hour:D2}:{minute:D2}");
                 }
             }
-            
+
             StartTimeComboBox.ItemsSource = timeSlots;
             EndTimeComboBox.ItemsSource = timeSlots;
-            
+
             // Set default values
-            StartTimeComboBox.SelectedItem = "08:30 AM";
-            EndTimeComboBox.SelectedItem = "12:00 PM";
+            StartTimeComboBox.SelectedItem = "08:30";
+            EndTimeComboBox.SelectedItem = "12:00";
         }
 
-        private void UpdateColorSelection(Border selectedBorder)
+        private void RefreshProfileGrid()
         {
-            // Reset all color options
-            if (selectedBorder.Parent is StackPanel parentPanel)
+            ProfileGrid.Children.Clear();
+            
+            // Add existing profiles
+            foreach (var profile in profiles)
             {
-                foreach (var child in parentPanel.Children)
-                {
-                    if (child is Border border)
-                    {
-                        border.BorderThickness = new Thickness(0);
-                        border.BorderBrush = null;
-                    }
-                }
+                AddProfileCard(profile);
             }
             
-            // Highlight selected color
-            selectedBorder.BorderThickness = new Thickness(3);
-            selectedBorder.BorderBrush = new SolidColorBrush(Colors.White);
-            selectedColor = selectedBorder.Tag?.ToString() ?? "#FF6347";
+            // Add "New Profile" button
+            AddNewProfileButton();
         }
 
-        private void ColorOption_Click(object sender, MouseButtonEventArgs e)
+        private void AddProfileCard(Profile profile)
         {
-            if (sender is Border border)
+            var border = new Border 
+            { 
+                Height = 92, 
+                Cursor = Cursors.Hand, 
+                Tag = profile.Id,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#141720")),
+                CornerRadius = new CornerRadius(12),
+                Margin = new Thickness(5)
+            };
+
+            // Add hover effects
+            border.MouseEnter += (s, e) => border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1e2329"));
+            border.MouseLeave += (s, e) => border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#141720"));
+
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            // Icon Image
+            var iconImage = new Image
             {
-                UpdateColorSelection(border);
+                Width = 32, Height = 32,
+                Source = new BitmapImage(new Uri(profile.Icon, UriKind.Relative)),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(8, 0, 0, 0)
+            };
+            Grid.SetColumn(iconImage, 0);
+
+            // Text Content
+            var stackPanel = new StackPanel
+            {
+                Margin = new Thickness(15, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            Grid.SetColumn(stackPanel, 1);
+
+            stackPanel.Children.Add(new TextBlock 
+            { 
+                Text = profile.Name, 
+                Foreground = Brushes.White, 
+                FontWeight = FontWeights.Bold, 
+                FontSize = 14 
+            });
+            stackPanel.Children.Add(new TextBlock 
+            { 
+                Text = profile.TimeSlot, 
+                Foreground = Brushes.White, 
+                FontStyle = FontStyles.Italic, 
+                FontSize = 12 
+            });
+            stackPanel.Children.Add(new TextBlock 
+            { 
+                Text = "Click to edit", 
+                Foreground = Brushes.Gray, 
+                FontSize = 10 
+            });
+
+            grid.Children.Add(iconImage); // Changed from ellipse to iconImage
+            grid.Children.Add(stackPanel);
+            border.Child = grid;
+            border.MouseLeftButtonUp += Profile_Click;
+            ProfileGrid.Children.Add(border);
+        }
+
+        private void AddNewProfileButton()
+        {
+            var border = new Border
+            {
+                Height = 92,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1e2329")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#333842")),
+                BorderThickness = new Thickness(2),
+                CornerRadius = new CornerRadius(12),
+                Cursor = Cursors.Hand,
+                Margin = new Thickness(5)
+            };
+
+            // Add hover effects
+            border.MouseEnter += (s, e) => 
+            {
+                border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#252b33"));
+                border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4a5259"));
+            };
+            border.MouseLeave += (s, e) => 
+            {
+                border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1e2329"));
+                border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#333842"));
+            };
+
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            // Circular Plus Frame
+            var plusBorder = new Border
+            {
+                Width = 40, Height = 40,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3a4149")),
+                CornerRadius = new CornerRadius(20),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            
+            var plusText = new TextBlock
+            {
+                Text = "+",
+                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7a8189")),
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            plusBorder.Child = plusText;
+            Grid.SetColumn(plusBorder, 0);
+
+            // Text Content
+            var stackPanel = new StackPanel
+            {
+                Margin = new Thickness(15, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            Grid.SetColumn(stackPanel, 1);
+
+            stackPanel.Children.Add(new TextBlock 
+            { 
+                Text = "New Profile", 
+                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7a8189")), 
+                FontWeight = FontWeights.Bold, 
+                FontSize = 14 
+            });
+            stackPanel.Children.Add(new TextBlock 
+            { 
+                Text = "Click to create", 
+                Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#5a6169")), 
+                FontStyle = FontStyles.Italic, 
+                FontSize = 12 
+            });
+
+            grid.Children.Add(plusBorder);
+            grid.Children.Add(stackPanel);
+            border.Child = grid;
+            border.MouseLeftButtonUp += NewProfile_Click;
+            ProfileGrid.Children.Add(border);
+        }
+
+        // Event Handlers
+        private void Profile_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Border border && border.Tag != null)
+            {
+                var profileId = border.Tag.ToString();
+                var profile = profiles.FirstOrDefault(p => p.Id == profileId);
+                if (profile != null)
+                {
+                    EditProfile(profile);
+                }
             }
         }
 
         private void NewProfile_Click(object sender, MouseButtonEventArgs e)
         {
-            ShowProfileForm(true);
+            ShowProfileForm(isEditing: false);
         }
 
-        private void Profile_Click(object sender, MouseButtonEventArgs e)
+        private void EditProfile(Profile profile)
         {
-            if (sender is Border profileBorder && profileBorder.Tag != null)
-            {
-                editingProfileId = profileBorder.Tag.ToString();
-                LoadProfileForEditing(profileBorder);
-                ShowProfileForm(false);
-            }
-        }
-
-        private void LoadProfileForEditing(Border profileBorder)
-        {
-            // Find the text elements in the profile
-            var grid = profileBorder.Child as Grid;
-            var stackPanel = grid?.Children.OfType<StackPanel>().FirstOrDefault();
-            var textBlocks = stackPanel?.Children.OfType<TextBlock>().ToList();
+            editingProfileId = profile.Id;
             
-            if (textBlocks != null && textBlocks.Count >= 2)
+            // Populate form with profile data
+            ProfileNameTextBox.Text = profile.Name;
+            ProfileDescriptionTextBox.Text = profile.Description;
+            StartTimeComboBox.SelectedItem = profile.StartTime;
+            EndTimeComboBox.SelectedItem = profile.EndTime;
+            
+            // Set selected icon
+            var iconBorder = FindIconBorder(profile.Icon);
+            if (iconBorder != null)
             {
-                // Load profile name
-                ProfileNameTextBox.Text = textBlocks[0].Text;
-                
-                // Load time slot
-                var timeSlot = textBlocks[1].Text;
-                if (timeSlot.Contains(" - "))
-                {
-                    var times = timeSlot.Split(new[] { " - " }, System.StringSplitOptions.None);
-                    StartTimeComboBox.SelectedItem = times[0];
-                    if (times.Length > 1)
-                        EndTimeComboBox.SelectedItem = times[1];
-                }
-                
-                // Load color
-                var ellipse = grid?.Children.OfType<Ellipse>().FirstOrDefault();
-                if (ellipse?.Fill is SolidColorBrush brush)
-                {
-                    selectedColor = brush.Color.ToString();
-                    // Find and select the matching color option
-                    if (ColorOption1.Parent is StackPanel colorPanel)
-                    {
-                        var colorOptions = colorPanel.Children.OfType<Border>();
-                        var matchingOption = colorOptions.FirstOrDefault(co => co.Tag?.ToString() == selectedColor);
-                        if (matchingOption != null)
-                        {
-                            UpdateColorSelection(matchingOption);
-                        }
-                    }
-                }
-                
-                // Load sample tasks (for demo purposes)
-                currentTasks.Clear();
-                currentTasks.Add("Review quarterly reports");
-                currentTasks.Add("Team meeting preparation");
-                currentTasks.Add("Client presentation");
+                UpdateIconSelection(iconBorder);
             }
+            
+            // Load tasks
+            currentTasks.Clear();
+            foreach (var task in profile.Tasks)
+            {
+                currentTasks.Add(task);
+            }
+            
+            ShowProfileForm(isEditing: true);
         }
 
-        private void ShowProfileForm(bool isNewProfile)
+        private Border? FindIconBorder(string icon)
         {
-            if (isNewProfile)
-            {
-                // Reset form for new profile
-                FormTitle.Text = "Create New Profile";
-                SaveProfileButton.Content = "Create Profile";
-                DeleteProfileButton.Visibility = Visibility.Collapsed;
-                
-                ProfileNameTextBox.Text = "Enter profile name...";
-                StartTimeComboBox.SelectedItem = "08:30 AM";
-                EndTimeComboBox.SelectedItem = "12:00 PM";
-                UpdateColorSelection(ColorOption1);
-                currentTasks.Clear();
-                editingProfileId = null;
-            }
-            else
-            {
-                // Setup form for editing
-                FormTitle.Text = "Edit Profile";
-                SaveProfileButton.Content = "Save Changes";
-                DeleteProfileButton.Visibility = Visibility.Visible;
-            }
+            var iconBorders = new[] { IconOption1, IconOption2, IconOption3, IconOption4, 
+                                     IconOption5, IconOption6 };
+            return iconBorders.FirstOrDefault(b => b.Tag?.ToString() == icon);
+        }
+
+        private void ShowProfileForm(bool isEditing)
+        {
+            FormTitle.Text = isEditing ? "Edit Profile" : "Create New Profile";
+            SaveProfileButton.Content = isEditing ? "Save Changes" : "Create Profile";
+            DeleteProfileButton.Visibility = isEditing ? Visibility.Visible : Visibility.Collapsed;
             
             WelcomePanel.Visibility = Visibility.Collapsed;
             ProfileFormScrollViewer.Visibility = Visibility.Visible;
@@ -176,130 +291,23 @@ namespace DashAppManagerWPF
 
         private void HideProfileForm()
         {
-            ProfileFormScrollViewer.Visibility = Visibility.Collapsed;
             WelcomePanel.Visibility = Visibility.Visible;
+            ProfileFormScrollViewer.Visibility = Visibility.Collapsed;
+            ClearForm();
         }
 
-        private void AddTask_Click(object sender, RoutedEventArgs e)
+        private void ClearForm()
         {
-            string taskText = NewTaskTextBox.Text.Trim();
-            
-            if (!string.IsNullOrEmpty(taskText) && taskText != "Enter new task...")
-            {
-                currentTasks.Add(taskText);
-                NewTaskTextBox.Text = "Enter new task...";
-            }
+            editingProfileId = null;
+            ProfileNameTextBox.Text = "Enter profile name...";
+            ProfileDescriptionTextBox.Text = "Enter role description...";
+            StartTimeComboBox.SelectedItem = "08:30";
+            EndTimeComboBox.SelectedItem = "12:00";
+            currentTasks.Clear();
+            UpdateIconSelection(IconOption1); // Changed from UpdateColorSelection
         }
 
-        private void RemoveTask_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is string taskToRemove)
-            {
-                currentTasks.Remove(taskToRemove);
-            }
-        }
-
-        private void SaveProfile_Click(object sender, RoutedEventArgs e)
-        {
-            string profileName = ProfileNameTextBox.Text.Trim();
-            string? startTime = StartTimeComboBox.SelectedItem?.ToString();
-            string? endTime = EndTimeComboBox.SelectedItem?.ToString();
-            
-            if (string.IsNullOrEmpty(profileName) || profileName == "Enter profile name...")
-            {
-                MessageBox.Show("Please enter a valid profile name.", "Validation Error", 
-                               MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            
-            if (string.IsNullOrEmpty(startTime) || string.IsNullOrEmpty(endTime))
-            {
-                MessageBox.Show("Please select both start and end times.", "Validation Error", 
-                               MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            
-            if (editingProfileId != null)
-            {
-                // Update existing profile
-                UpdateExistingProfile(profileName, startTime, endTime);
-                MessageBox.Show("Profile updated successfully!", "Success", 
-                               MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                // Create new profile logic would go here
-                // For demo purposes, we'll show a success message
-                MessageBox.Show($"Profile '{profileName}' created successfully!\n" +
-                               $"Time Slot: {startTime} - {endTime}\n" +
-                               $"Color: {selectedColor}\n" +
-                               $"Tasks: {currentTasks.Count} added", 
-                               "Profile Created", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            
-            HideProfileForm();
-        }
-
-        private void UpdateExistingProfile(string profileName, string startTime, string endTime)
-        {
-            // Find the profile being edited
-            var profileBorders = ProfileGrid.Children.OfType<Border>()
-                .Where(b => b.Tag?.ToString() == editingProfileId);
-            
-            foreach (var profileBorder in profileBorders)
-            {
-                var grid = profileBorder.Child as Grid;
-                var stackPanel = grid?.Children.OfType<StackPanel>().FirstOrDefault();
-                var textBlocks = stackPanel?.Children.OfType<TextBlock>().ToList();
-                var ellipse = grid?.Children.OfType<Ellipse>().FirstOrDefault();
-                
-                if (textBlocks != null && textBlocks.Count >= 2 && ellipse != null)
-                {
-                    // Update profile name
-                    textBlocks[0].Text = profileName;
-                    
-                    // Update time slot
-                    textBlocks[1].Text = $"{startTime} - {endTime}";
-                    
-                    // Update color
-                    var converter = new BrushConverter();
-                    if (converter.ConvertFromString(selectedColor) is Brush brush)
-                    {
-                        ellipse.Fill = brush;
-                    }
-                }
-            }
-        }
-
-        private void DeleteProfile_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show("Are you sure you want to delete this profile?", 
-                                       "Confirm Deletion", MessageBoxButton.YesNo, 
-                                       MessageBoxImage.Question);
-            
-            if (result == MessageBoxResult.Yes)
-            {
-                // Find and remove the profile being edited
-                var profileToRemove = ProfileGrid.Children.OfType<Border>()
-                    .FirstOrDefault(b => b.Tag?.ToString() == editingProfileId);
-                
-                if (profileToRemove != null)
-                {
-                    ProfileGrid.Children.Remove(profileToRemove);
-                    MessageBox.Show("Profile deleted successfully!", "Success", 
-                                   MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                
-                HideProfileForm();
-            }
-        }
-
-        private void CancelProfile_Click(object sender, RoutedEventArgs e)
-        {
-            HideProfileForm();
-        }
-
-        // Handle text box focus events for better UX
+        // Form Event Handlers
         private void ProfileNameTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (ProfileNameTextBox.Text == "Enter profile name...")
@@ -313,6 +321,22 @@ namespace DashAppManagerWPF
             if (string.IsNullOrWhiteSpace(ProfileNameTextBox.Text))
             {
                 ProfileNameTextBox.Text = "Enter profile name...";
+            }
+        }
+
+        private void ProfileDescriptionTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (ProfileDescriptionTextBox.Text == "Enter role description...")
+            {
+                ProfileDescriptionTextBox.Text = "";
+            }
+        }
+
+        private void ProfileDescriptionTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ProfileDescriptionTextBox.Text))
+            {
+                ProfileDescriptionTextBox.Text = "Enter role description...";
             }
         }
 
@@ -336,8 +360,126 @@ namespace DashAppManagerWPF
         {
             if (e.Key == Key.Enter)
             {
-                AddTask_Click(sender, new RoutedEventArgs());
+                AddTask();
             }
+        }
+
+        private void AddTask_Click(object sender, RoutedEventArgs e)
+        {
+            AddTask();
+        }
+
+        private void AddTask()
+        {
+            if (!string.IsNullOrWhiteSpace(NewTaskTextBox.Text) && NewTaskTextBox.Text != "Enter new task...")
+            {
+                currentTasks.Add(NewTaskTextBox.Text);
+                NewTaskTextBox.Text = "Enter new task...";
+            }
+        }
+
+        private void RemoveTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag != null)
+            {
+                var taskToRemove = button.Tag.ToString();
+                currentTasks.Remove(taskToRemove);
+            }
+        }
+
+        private void IconOption_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Border border)
+            {
+                UpdateIconSelection(border);
+            }
+        }
+
+        private void UpdateIconSelection(Border selectedBorder)
+        {
+            // Reset all icon options
+            var iconBorders = new[] { IconOption1, IconOption2, IconOption3, IconOption4, 
+                                     IconOption5, IconOption6 };
+            
+            foreach (var border in iconBorders)
+            {
+                border.BorderThickness = new Thickness(0);
+                border.BorderBrush = null;
+            }
+
+            // Highlight selected icon
+            selectedBorder.BorderThickness = new Thickness(3);
+            selectedBorder.BorderBrush = new SolidColorBrush(Colors.White);
+            selectedIcon = selectedBorder.Tag?.ToString() ?? "assets/icons/3dbc93.png";
+        }
+
+        private void SaveProfile_Click(object sender, RoutedEventArgs e)
+        {
+            // Validate form (simplified - no popups)
+            if (string.IsNullOrWhiteSpace(ProfileNameTextBox.Text) || ProfileNameTextBox.Text == "Enter profile name...")
+            {
+                return; // Simply don't save if invalid
+            }
+
+            if (StartTimeComboBox.SelectedItem == null || EndTimeComboBox.SelectedItem == null)
+            {
+                return; // Simply don't save if invalid
+            }
+
+            // Create or update profile
+            Profile profile;
+            if (editingProfileId != null)
+            {
+                // Update existing profile
+                profile = profiles.First(p => p.Id == editingProfileId);
+                profile.Name = ProfileNameTextBox.Text;
+                profile.Description = string.IsNullOrWhiteSpace(ProfileDescriptionTextBox.Text) || ProfileDescriptionTextBox.Text == "Enter role description..." 
+                    ? "" : ProfileDescriptionTextBox.Text;
+                profile.Icon = selectedIcon; // Changed from Color to Icon
+                profile.StartTime = StartTimeComboBox.SelectedItem.ToString();
+                profile.EndTime = EndTimeComboBox.SelectedItem.ToString();
+                profile.Tasks = currentTasks.ToList();
+            }
+            else
+            {
+                // Create new profile
+                profile = new Profile
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = ProfileNameTextBox.Text,
+                    Description = string.IsNullOrWhiteSpace(ProfileDescriptionTextBox.Text) || ProfileDescriptionTextBox.Text == "Enter role description..." 
+                        ? "" : ProfileDescriptionTextBox.Text,
+                    Icon = selectedIcon, // Changed from Color to Icon
+                    StartTime = StartTimeComboBox.SelectedItem.ToString(),
+                    EndTime = EndTimeComboBox.SelectedItem.ToString(),
+                    Tasks = currentTasks.ToList()
+                };
+                profiles.Add(profile);
+            }
+
+            // Save to CSV
+            ProfileDataService.SaveProfiles(profiles);
+            
+            // Refresh UI
+            RefreshProfileGrid();
+            HideProfileForm();
+        }
+
+        private void DeleteProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if (editingProfileId != null)
+            {
+                var profile = profiles.First(p => p.Id == editingProfileId);
+                profiles.RemoveAll(p => p.Id == editingProfileId);
+                ProfileDataService.SaveProfiles(profiles);
+                RefreshProfileGrid();
+                HideProfileForm();
+            }
+        }
+
+        private void CancelProfile_Click(object sender, RoutedEventArgs e)
+        {
+            HideProfileForm();
         }
     }
 }
