@@ -1,0 +1,37 @@
+<Window x:Class="SPMWPF.WelcomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Welcome to Solo Project Manager" Height="460" Width="760" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Background="Transparent" ShowInTaskbar="False">
+    <Border Background="#0B0D10" CornerRadius="14" Padding="22" BorderBrush="#1E2228" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="18" ShadowDepth="6" Opacity="0.45"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top" Margin="0,0,0,8">
+                <Image Source="pack://application:,,,/assets/spm_logo.png" Width="56" Height="56" Margin="0,0,14,0"/>
+                <TextBlock Text="Welcome to Solo Project Manager" Foreground="White" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" FontFamily="pack://application:,,,/assets/fonts/#Inter"/>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" Margin="0,8,0,18" VerticalScrollBarVisibility="Auto">
+                <TextBlock TextWrapping="Wrap" Foreground="#DADADA" FontSize="15" FontFamily="pack://application:,,,/assets/fonts/#Inter" TextAlignment="Left" LineHeight="22">
+                    Solo Project Manager (SPM) is a focused, lightweight organizer for managing projects, timelines, and daily roles. Create projects with start/end dates, add concise descriptions, and view them on the calendar to see timelines and overlaps at a glance. Use the dashboard to switch active profiles, review unfinished tasks, and jump to project details. Cards are color-coded for quick scanning; click any card to inspect or edit items. Add tasks to profiles or mark them complete—completed items are stored locally for portability. SPM keeps data in simple CSV files so you can move projects between machines. Use the quick-create controls to add a project or the calendar to drill into a day. This popup introduces core workflows; you can dismiss it now or permanently by choosing "Don't show again." Your settings are stored locally. Explore filters, sorting, and profile-specific views to tailor SPM to your workflow. Start by creating your project.
+                </TextBlock>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                <Button x:Name="DontShowAgainBtn" Content="Don't show again" Style="{StaticResource SecondaryButton}" Width="160" Height="38"/>
+                <Button x:Name="OkBtn" Content="OK" Width="110" Height="38" FontWeight="SemiBold" Cursor="Hand" Background="#16A34A" Foreground="White"/>
+            </StackPanel>
+
+            <Button Width="28" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,6,0" Background="#111214" BorderBrush="#2A2D31" BorderThickness="1" Click="Close_Click">
+                <Path Data="M4,4 L12,12 M12,4 L4,12" Stroke="#AAA" StrokeThickness="1.5" StrokeEndLineCap="Round" StrokeStartLineCap="Round"/>
+            </Button>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,371 @@
+<UserControl x:Class="SPMWPF.AIPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+        d:DesignHeight="712" d:DesignWidth="577">
+    <UserControl.Resources>
+        <QuadraticEase x:Key="EaseOut" EasingMode="EaseOut" />
+
+        <!-- Entrance Animations -->
+        <Storyboard x:Key="EntranceAnimation">
+            <!-- Glow Animation -->
+            <DoubleAnimation Storyboard.TargetName="GlowTransform" Storyboard.TargetProperty="Y" From="-218" To="0" Duration="0:0:1.0" EasingFunction="{StaticResource EaseOut}" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="GlowEllipse" Storyboard.TargetProperty="Opacity" From="0" To="0.3" Duration="0:0:0.6" FillBehavior="HoldEnd" />
+            
+            <!-- Logo Animation -->
+            <DoubleAnimation Storyboard.TargetName="LogoTransform" Storyboard.TargetProperty="Y" From="-218" To="0" Duration="0:0:1.0" EasingFunction="{StaticResource EaseOut}" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="LogoImage" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" FillBehavior="HoldEnd" />
+
+            <!-- Text Fade-in -->
+            <DoubleAnimation Storyboard.TargetName="WelcomeText" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" BeginTime="0:0:0.6" />
+            <DoubleAnimation Storyboard.TargetName="HelpText" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6" BeginTime="0:0:0.6" />
+
+            <!-- Chatbox Animation -->
+            <DoubleAnimation Storyboard.TargetName="ChatboxTransform" Storyboard.TargetProperty="Y" From="38" To="0" Duration="0:0:0.6" EasingFunction="{StaticResource EaseOut}" />
+        </Storyboard>
+
+        <!-- Looping Pulse Animation -->
+        <Storyboard x:Key="GlowPulseAnimation" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="GlowEllipse" Storyboard.TargetProperty="Opacity" From="0.25" To="0.35" Duration="0:0:1.8" AutoReverse="True" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="577*"/>
+            <ColumnDefinition Width="397*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Middle Section Grid -->
+        <Grid x:Name="AIMiddleGrid" Grid.Column="0">
+            <Grid x:Name="MiddleWindow">
+            <!-- Blue glow effect behind logo -->
+            <Ellipse x:Name="GlowEllipse" Width="600" Height="600"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     Margin="-20,-235,0,0"
+                     Opacity="0">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#4D0066FF" Offset="0"/>
+                        <GradientStop Color="#1A0066FF" Offset="0.5"/>
+                        <GradientStop Color="#00000000" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="GlowPulseScale" ScaleX="1" ScaleY="1" />
+                        <TranslateTransform x:Name="GlowTransform" Y="-218" />
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            
+            <!-- Simple animated logo for AI page -->
+            <Image x:Name="LogoImage" Source="pack://application:,,,/assets/images/spm_logo.png"
+                   Width="126" Height="126"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Margin="0,-240,0,0"
+                   Opacity="0"
+                   RenderTransformOrigin="0.5,0.5"
+                   CacheMode="BitmapCache"
+                   RenderOptions.BitmapScalingMode="LowQuality"
+                   RenderOptions.ClearTypeHint="Enabled">
+                <Image.RenderTransform>
+                    <TranslateTransform x:Name="LogoTransform" Y="-218" />
+                </Image.RenderTransform>
+            </Image>
+            
+            <!-- Fading in texts under the SPM logo -->
+        <TextBlock x:Name="WelcomeText"
+            Text="Welcome to SPM AI"
+               FontSize="16"
+               FontFamily="pack://application:,,,/assets/fonts/#Inter"
+               FontWeight="SemiBold"
+               Foreground="#888"
+               Opacity="0"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Margin="0,-40,0,0"/>
+        <TextBlock x:Name="HelpText"
+               Text="How can I help?"
+               FontSize="32"
+               FontFamily="pack://application:,,,/assets/fonts/#Inter"
+               FontWeight="Bold"
+               Foreground="White"
+               Opacity="0"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Margin="0,40,0,0"/>
+            
+            <Canvas x:Name="AITextBoxHost" Width="529" Height="91" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,50" CacheMode="BitmapCache">
+                <Canvas.RenderTransform>
+                    <TranslateTransform x:Name="ChatboxTransform" Y="38" />
+                </Canvas.RenderTransform>
+                <Canvas.Clip>
+                    <RectangleGeometry Rect="0,0,529,91" RadiusX="23" RadiusY="13" />
+                </Canvas.Clip>
+                <!-- Gallery Button -->
+                <Button Width="24.5" Height="24.5" Canvas.Left="29" Canvas.Top="52" Background="Transparent" BorderThickness="0" Focusable="False" Cursor="Hand" Padding="0" BorderBrush="Transparent" Panel.ZIndex="1">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Opacity" Value="0.21" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent" Width="24.5" Height="24.5">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.2" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.21" Duration="0:0:0.2" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Image Source="pack://application:,,,/SPMWPF;component/assets/icons/gallery.png" Width="24.5" Height="24.5" />
+                </Button>
+                <!-- Send Button -->
+                <Button Width="24.5" Height="24.5" Canvas.Left="478" Canvas.Top="52" Background="Transparent" BorderThickness="0" Focusable="False" Cursor="Hand" Padding="0" BorderBrush="Transparent" Panel.ZIndex="1">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Opacity" Value="0.21" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent" Width="24.5" Height="24.5">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.6" Duration="0:0:0.2" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.21" Duration="0:0:0.2" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Image Source="pack://application:,,,/SPMWPF;component/assets/icons/send.png" Width="24.5" Height="24.5" />
+                </Button>
+                <!-- Placeholder overlay -->
+                <TextBox x:Name="AITextBox"
+                    Width="475"
+                    Height="57"
+                    Canvas.Left="27"
+                    Canvas.Top="17"
+                    Background="Transparent"
+                    FontFamily="pack://application:,,,/assets/fonts/Inter_18pt-Regular.ttf#Inter"
+                    FontSize="13.2"
+                    Foreground="White"
+                    IsReadOnly="False"
+                    IsEnabled="True"
+                    CaretBrush="White"
+                    VerticalContentAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Padding="0,0,0,0"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    BorderThickness="0"
+                    BorderBrush="Transparent"/>
+                <TextBlock Text="What do you need help with?"
+                    Width="475"
+                    Height="57"
+                    Canvas.Left="27"
+                    Canvas.Top="17"
+                    FontFamily="pack://application:,,,/assets/fonts/Inter_18pt-Regular.ttf#Inter"
+                    FontSize="13.2"
+                    Foreground="#888"
+                    Padding="0,0,0,0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    IsHitTestVisible="False">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsFocused, ElementName=AITextBox}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsFocused, ElementName=AITextBox}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Rectangle
+                    Width="529"
+                    Height="91"
+                    RadiusX="23"
+                    RadiusY="13"
+                    Stroke="#B0B0B0"
+                    StrokeThickness="2"
+                    IsHitTestVisible="False">
+                    <Rectangle.Effect>
+                        <DropShadowEffect Color="White" BlurRadius="32" ShadowDepth="0" Opacity="0.999" />
+                    </Rectangle.Effect>
+                </Rectangle>
+            </Canvas>
+        </Grid>
+        </Grid>
+
+        <!-- Right Section Grid -->
+        <Grid x:Name="AISubGrid" Grid.Column="1">
+            <StackPanel VerticalAlignment="Top" Margin="20,20,20,0">
+                
+                <!-- New chat button -->
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,20" Height="40">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,12">
+                                    <Image Source="pack://application:,,,/assets/icons/new_chat.png" Width="16" Height="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="New chat" Foreground="White" VerticalAlignment="Center" FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- Previous chats title -->
+                <TextBlock Text="Previous chats" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="12,0,0,12"/>
+
+                <!-- Chat history items -->
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,8" MinHeight="32">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <TextBlock Text="Sprite sheet creation" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,8" MinHeight="32">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <TextBlock Text="Improve DALL E prompt" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button HorizontalAlignment="Stretch" Cursor="Hand" Margin="0,0,0,8" MinHeight="32">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                                <TextBlock Text="Bird animation request" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
