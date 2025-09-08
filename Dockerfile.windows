@@ -1,0 +1,9 @@
+### Runtime Dockerfile for the published SPM WPF app
+# This image expects the publish/ folder to be available (CI artifact or local copy).
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
+WORKDIR /app
+
+# Copy publish artifacts into image
+COPY publish/ /app/
+
+ENTRYPOINT ["SPMWPF.exe"]
