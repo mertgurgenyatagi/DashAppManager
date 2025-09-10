@@ -5,24 +5,76 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
     d:DesignHeight="712" d:DesignWidth="974">
+    <UserControl.Resources>
+        <Style x:Key="DateButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="MinHeight" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="HoverBorder" Background="#19FFFFFF" CornerRadius="8" Opacity="0"/>
+                            <TextBlock x:Name="DateTextBlock" Text="{TemplateBinding Content}" Foreground="White" VerticalAlignment="Center" FontSize="14" TextWrapping="Wrap" Margin="16,10"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="577*"/>
             <ColumnDefinition Width="397*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Middle Section Grid -->
-        <Border BorderBrush="Purple" BorderThickness="2" Grid.Column="0">
-            <Grid x:Name="NotesMiddleGrid">
-                <TextBlock Text="Notes Page" Foreground="White" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!-- Middle Section: Notes Editor -->
+        <Border Grid.Column="0" Background="#181C27" CornerRadius="16" Padding="32" Margin="24,24,12,24">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!-- Title Input -->
+                <TextBox x:Name="TitleTextBox" FontSize="22" FontWeight="Bold" Foreground="White" Background="#23273A" BorderThickness="0" Margin="0,0,0,18" Padding="12" />
+                <!-- Note Body -->
+                <TextBox x:Name="BodyTextBox" Grid.Row="1" AcceptsReturn="True" FontSize="16" Foreground="White" Background="#23273A" BorderThickness="0" Padding="16" VerticalScrollBarVisibility="Auto" Margin="0,0,0,18"/>
+                <!-- Save Button -->
+                <Button x:Name="SaveButton" Grid.Row="2" Content="Save" Height="44" FontSize="16" FontWeight="SemiBold" Background="#2563eb" Foreground="White" BorderThickness="0" HorizontalAlignment="Right" Width="120" Margin="0,12,0,0"/>
             </Grid>
         </Border>
 
-        <!-- Right Section Grid -->
-        <Border BorderBrush="Magenta" BorderThickness="2" Grid.Column="1">
-            <Grid x:Name="NotesSubGrid">
-                <!-- Content for the right section goes here -->
-            </Grid>
+        <!-- Right Section: Dates List -->
+        <Border Grid.Column="1" Background="#141720" CornerRadius="16" Padding="24" Margin="12,24,24,24">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel VerticalAlignment="Top">
+                    <!-- Title styled like AI page -->
+                    <TextBlock Text="Dates" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="12,0,0,12"/>
+                    <StackPanel x:Name="DatesStackPanel" Orientation="Vertical"/>
+                </StackPanel>
+            </ScrollViewer>
         </Border>
     </Grid>
 </UserControl>
