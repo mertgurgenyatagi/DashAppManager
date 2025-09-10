@@ -74,6 +74,10 @@
       <Resource Include="assets/fonts/Inter_18pt-Medium.ttf" />
       <Resource Include="assets/fonts/Inter_18pt-Light.ttf" />
       <Resource Include="assets/fonts/MonsieurLaDoulaise-Regular.ttf" />
+      
+      <!-- Notes Icons -->
+      <Resource Include="assets/icons/notes.png" />
+      <Resource Include="assets/icons/notes_blue.png" />
     </ItemGroup>
 
 </Project>

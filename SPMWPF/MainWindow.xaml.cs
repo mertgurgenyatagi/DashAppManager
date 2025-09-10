@@ -52,7 +52,7 @@ public partial class MainWindow : Window
     
     private static void PreloadImages()
     {
-        var icons = new[] { "dashboard", "user", "notifications", "calendar", "config", "ai", "settings" };
+        var icons = new[] { "dashboard", "user", "notifications", "calendar", "config", "notes", "ai", "settings" };
         foreach (var icon in icons)
         {
             try
@@ -104,9 +104,10 @@ public partial class MainWindow : Window
                     else if (top == 237) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("user"); };
                     else if (top == 286) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("notifications"); };
                     else if (top == 335) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("calendar"); };
-                    else if (top == 384) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("config"); };
-                    else if (top == 433) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("ai"); };
-                    else if (top == 482) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("settings"); };
+                    else if (top == 384) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("notes"); };
+                    else if (top == 433) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("config"); };
+                    else if (top == 482) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("ai"); };
+                    else if (top == 531) btn.Click += (s, e) => { UpdateLastClickedButton(btn); ShowPage("settings"); };
                 }
             }
         }
@@ -145,6 +146,7 @@ public partial class MainWindow : Window
                 "notifications" => new NotificationsPage(),
                 "calendar" => new CalendarPage(),
                 "config" => new ConfigPage(),
+                "notes" => new NotesPage(),
                 "ai" => new AIPage(),
                 "settings" => new SettingsPage(),
                 _ => new DashboardPage()

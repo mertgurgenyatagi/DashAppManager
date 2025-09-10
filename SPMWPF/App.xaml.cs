@@ -47,10 +47,9 @@ public partial class App : Application
         }
         catch (System.Exception ex)
         {
+            MessageBox.Show(ex.ToString());
             // If anything fails here, write to console so the run terminal shows the error.
-            System.Console.Error.WriteLine($"Startup error: {ex}");
-            // Attempt to show the main window if it exists
-            try { main?.Show(); } catch { }
+            Console.WriteLine($"Error during startup: {ex}");
         }
     }
 }
