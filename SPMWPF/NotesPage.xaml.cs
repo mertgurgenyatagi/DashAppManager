@@ -13,14 +13,21 @@ namespace SPMWPF
         private Dictionary<DateTime, (string Title, string Body)> _notes = new();
         private DateTime _selectedDate;
         private List<DateTime> _dateList = new();
-        private readonly string _csvPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "notes.csv");
+        private static string GetSaveFolder()
+        {
+            string documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string folder = Path.Combine(documents, "SoloProjectManager");
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+            return folder;
+        }
+
+        private string _csvPath => Path.Combine(GetSaveFolder(), "notes.csv");
 
         public NotesPage()
         {
             InitializeComponent();
             LoadNotesFromCsv();
             PopulateDates();
-            SaveButton.Click += SaveButton_Click;
         }
 
         private void PopulateDates()
@@ -71,7 +78,7 @@ namespace SPMWPF
             }
         }
 
-        private void SaveCurrentNote()
+        public void SaveCurrentNote()
         {
             if (_selectedDate != default)
             {
@@ -80,14 +87,18 @@ namespace SPMWPF
             }
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        public void AutoSaveNote()
         {
             SaveCurrentNote();
         }
 
         private void LoadNotesFromCsv()
         {
-            if (!File.Exists(_csvPath)) return;
+            if (!File.Exists(_csvPath))
+            {
+                File.WriteAllText(_csvPath, "");
+                return;
+            }
             foreach (var line in File.ReadAllLines(_csvPath))
             {
                 var parts = line.Split(new[] { ',' }, 3);

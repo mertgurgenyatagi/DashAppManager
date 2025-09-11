@@ -29,7 +29,14 @@ namespace SPMWPF.Models
 
     public class ProfileDataService
     {
-        private static readonly string CsvFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "profiles.csv");
+        private static string GetSaveFolder()
+        {
+            string documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string folder = Path.Combine(documents, "SoloProjectManager");
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+            return folder;
+        }
+        private static readonly string CsvFilePath = Path.Combine(GetSaveFolder(), "profiles.csv");
         private const string CsvHeader = "Id,Name,Description,Icon,StartTime,EndTime,Tasks"; // Changed Color to Icon
 
         public static List<Profile> LoadProfiles()

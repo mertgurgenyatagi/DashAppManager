@@ -564,5 +564,15 @@ namespace SPMWPF
                 return System.Windows.Media.Color.FromRgb(61, 188, 147); // Default green
             }
         }
+
+        /// <summary>
+        /// Public method to refresh the dashboard content
+        /// This will reload profiles and update the displayed tasks
+        /// </summary>
+        public void RefreshDashboard()
+        {
+            LoadProfiles();
+            ShowDefaultTaskView();
+        }
     }
 }

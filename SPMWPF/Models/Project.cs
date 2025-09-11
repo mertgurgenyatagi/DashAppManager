@@ -42,7 +42,14 @@ namespace SPMWPF.Models
 
     public static class ProjectDataService
     {
-        private static readonly string ProjectsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "projects.csv");
+        private static string GetSaveFolder()
+        {
+            string documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string folder = Path.Combine(documents, "SoloProjectManager");
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+            return folder;
+        }
+        private static readonly string ProjectsFilePath = Path.Combine(GetSaveFolder(), "projects.csv");
 
         public static List<Project> LoadProjects()
         {

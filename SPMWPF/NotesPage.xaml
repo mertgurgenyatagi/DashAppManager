@@ -61,8 +61,6 @@
                 <TextBox x:Name="TitleTextBox" FontSize="22" FontWeight="Bold" Foreground="White" Background="#23273A" BorderThickness="0" Margin="0,0,0,18" Padding="12" />
                 <!-- Note Body -->
                 <TextBox x:Name="BodyTextBox" Grid.Row="1" AcceptsReturn="True" FontSize="16" Foreground="White" Background="#23273A" BorderThickness="0" Padding="16" VerticalScrollBarVisibility="Auto" Margin="0,0,0,18"/>
-                <!-- Save Button -->
-                <Button x:Name="SaveButton" Grid.Row="2" Content="Save" Height="44" FontSize="16" FontWeight="SemiBold" Background="#2563eb" Foreground="White" BorderThickness="0" HorizontalAlignment="Right" Width="120" Margin="0,12,0,0"/>
             </Grid>
         </Border>
 

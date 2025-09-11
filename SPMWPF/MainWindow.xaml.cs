@@ -128,6 +128,23 @@ public partial class MainWindow : Window
 
     private void ShowPage(string page)
     {
+        // Auto-save Notes if leaving Notes page
+        if (_currentPage == "notes" && _pageCache.ContainsKey("notes"))
+        {
+            if (_pageCache["notes"] is NotesPage notesPage)
+            {
+                notesPage.AutoSaveNote();
+            }
+        }
+        // Refresh dashboard if navigating to dashboard
+        if (page == "dashboard" && _pageCache.ContainsKey("dashboard"))
+        {
+            if (_pageCache["dashboard"] is DashboardPage dashboardPage)
+            {
+                dashboardPage.RefreshDashboard();
+            }
+        }
+        
         if (_pageContentHost1 == null || _pageContentHost2 == null) return;
         
         // Control dots grid visibility - only show on dashboard page

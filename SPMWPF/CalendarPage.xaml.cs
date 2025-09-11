@@ -22,6 +22,7 @@ namespace SPMWPF
         };
         private int colorIndex = 0;
         private Project? selectedProject = null;
+    private bool isEditing = false;
 
         public CalendarPage()
         {
@@ -129,6 +130,8 @@ namespace SPMWPF
             ProjectStartDatePicker.SelectedDate = DateTime.Today;
             ProjectEndDatePicker.SelectedDate = DateTime.Today.AddDays(7);
             ProjectDescriptionTextBox.Text = "";
+            isEditing = false;
+            CreateProjectButton.Content = "Create Project";
         }
 
         private void ShowProjectDetails(Project project)
@@ -143,6 +146,22 @@ namespace SPMWPF
             selectedProject = project;
         }
 
+        private void ShowProjectEditForm(Project project)
+        {
+            DefaultContent.Visibility = Visibility.Collapsed;
+            ProjectCreationForm.Visibility = Visibility.Visible;
+            ProjectDetails.Visibility = Visibility.Collapsed;
+
+            // Populate form with existing project values
+            ProjectNameTextBox.Text = project.Name;
+            ProjectStartDatePicker.SelectedDate = project.StartDate;
+            ProjectEndDatePicker.SelectedDate = project.EndDate;
+            ProjectDescriptionTextBox.Text = project.Description;
+
+            isEditing = true;
+            CreateProjectButton.Content = "Save Changes";
+        }
+
         private void CreateProjectButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ProjectNameTextBox.Text) ||
@@ -152,23 +171,42 @@ namespace SPMWPF
                 return; // Simply don't create if validation fails
             }
 
-            var project = new Project
+            if (isEditing && selectedProject != null)
             {
-                Id = Guid.NewGuid().ToString(),
-                Name = ProjectNameTextBox.Text,
-                StartDate = ProjectStartDatePicker.SelectedDate.Value,
-                EndDate = ProjectEndDatePicker.SelectedDate.Value,
-                Description = ProjectDescriptionTextBox.Text,
-                ColorValue = GetRandomColorHex()
-            };
+                // Update existing project
+                selectedProject.Name = ProjectNameTextBox.Text;
+                selectedProject.StartDate = ProjectStartDatePicker.SelectedDate.Value;
+                selectedProject.EndDate = ProjectEndDatePicker.SelectedDate.Value;
+                selectedProject.Description = ProjectDescriptionTextBox.Text;
 
-            // Add to local list and save to CSV
-            projects.Add(project);
-            ProjectDataService.SaveProjects(projects);
+                // Save and refresh
+                ProjectDataService.SaveProjects(projects);
+                RefreshCalendar();
+                ShowDefaultContent();
+                selectedProject = null;
+                isEditing = false;
+                CreateProjectButton.Content = "Create Project";
+            }
+            else
+            {
+                var project = new Project
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = ProjectNameTextBox.Text,
+                    StartDate = ProjectStartDatePicker.SelectedDate.Value,
+                    EndDate = ProjectEndDatePicker.SelectedDate.Value,
+                    Description = ProjectDescriptionTextBox.Text,
+                    ColorValue = GetNextProjectColor()
+                };
 
-            // Add to calendar view
-            calendarView?.AddProject(project);
-            ShowDefaultContent();
+                // Add to local list and save to CSV
+                projects.Add(project);
+                ProjectDataService.SaveProjects(projects);
+
+                // Add to calendar view
+                calendarView?.AddProject(project);
+                ShowDefaultContent();
+            }
         }
 
         private void CancelProjectButton_Click(object sender, RoutedEventArgs e)
@@ -193,10 +231,28 @@ namespace SPMWPF
             }
         }
 
-        private string GetRandomColorHex()
+        private void EditProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            var random = new Random();
-            return String.Format("#{0:X6}", random.Next(0x1000000));
+            if (selectedProject != null)
+            {
+                ShowProjectEditForm(selectedProject);
+            }
+        }
+
+        // Sequential color assignment: dark blue, dark red, dark green, orange
+        private static readonly string[] ProjectColorSequence = new[]
+        {
+            "#1A237E", // Dark Blue
+            "#B71C1C", // Dark Red
+            "#1B5E20", // Dark Green
+            "#FF9800"  // Orange
+        };
+
+        private string GetNextProjectColor()
+        {
+            // Count existing projects and cycle through colors
+            int count = projects.Count;
+            return ProjectColorSequence[count % ProjectColorSequence.Length];
         }
     }
 }
